@@ -1,40 +1,9 @@
---[[
-    GET/REQUEST UPDATES HERE: https://discord.gg/rc3TDqKmjN
-    Creator: linenhs (discord.com)
 
-    [ * Links:
-         Documentation: https://reallinen.gitbook.io/3d-ui-linui-documentation/
-         V3rmillion Thread: https://v3rm.net/threads/linui-3d-roblox-ui-library.6666/
-    ]
-
-    This automatically deletes connections on re-execution, basically reducing lag [ You shouldn't lag with this UI Library ]
-    PLS Credit me If ur going to use OR Fork or Do anything rlly, this was kinda hard to make and took over 3 days
-
-    * The Y, Z, R AND G Parameters save on re-execute. To change or remove them, open exploit workspace fodler -> LinenModule -> (GAME_PLACE_ID).txt
-    * UI Config saves per game, not globally
-]]
-
--- 2000+ Lines, crazy isn't it?
--- Version: 1
-
-STRING = "Fixes:"
---[[
-	* Fixed UI click-related bugs
-	* Fixed/Added breathing
-	* Fixed Toggles inverting wrong callback
-	* Made more hard to detect
-	* Fixed Colorpicker overriding screen
-]]
-
-STRING = "Updates:"
---[[
-	* Added Colorpicker
-]]
 
 local __original_require = require
 local function require(link)
 
-    if type(link)=="number" then return __original_require(link) end
+  if type(link)=="number" then return __original_require(link) end
     if type(link)~="string" then return nil; end
     local suc,err = pcall(function() return game:HttpGet(link) end)
     -- >.< Deku Demz Is Gay  --
@@ -79,13 +48,13 @@ Path.Index = function(inst, ...: string)
 	if typeof(inst)~="Instance" then return false, "First Argument must be an Instance"; end
 	local base = inst
 
-	for i,v in next, {...} do
+for i,v in next, {...} do
 		if type(v)~="nil" then
 			local indexedSuccessfully, result = pcall(function()
 				return base[v]
 			end)
 
-			if indexedSuccessfully and type(result)~="nil" then
+ if indexedSuccessfully and type(result)~="nil" then
 				base = result
 			else
 				base = nil
@@ -94,12 +63,12 @@ Path.Index = function(inst, ...: string)
 		end
 	end
 
-	return base
+return base
 end
 Path.findPath = function(str: string)
 	if type(str)~="string" then return"First argument must be a string" end
 
-	local gameInstances = {
+local gameInstances = {
 		["game"] = game,
 		["Workspace"] = workspace,
 		["Players"] = game:GetService("Players"),
@@ -113,15 +82,15 @@ Path.findPath = function(str: string)
 		["SoundService"] = game:GetService("SoundService"),
 	}	
 
-	for i,v in next, gameInstances do local storedName, storedValue = i, v;gameInstances[i] = nil;gameInstances[storedName:lower()] = storedValue end
+for i,v in next, gameInstances do local storedName, storedValue = i, v;gameInstances[i] = nil;gameInstances[storedName:lower()] = storedValue end
 	local parsed = string.split(str, ".")
 	local base = game;
 
-	for i,v in next, parsed do
+ for i,v in next, parsed do
 		if not base then break; end
 		if type(v)=="string" then
 
-			if gameInstances[v:lower()] then
+ if gameInstances[v:lower()] then
 				base = gameInstances[v:lower()]
 				continue;
 			end
@@ -196,8 +165,8 @@ end
 
 local handleChildSize; handleChildSize = function(child: Instance, Frame, ...) -- Written by the one and only Linen#3485 | Basically makes sure the ScrollingFrame is auto-scaled to the size of the elements inside
 
-	local arg = {...}
-	local WhitelistedNames = {
+local arg = {...}
+local WhitelistedNames = {
 		["ImageButton"] = true,
 		["ImageLabel"] = true,
 		["Button"] = true,
@@ -206,7 +175,7 @@ local handleChildSize; handleChildSize = function(child: Instance, Frame, ...) -
 		["ScrollingFrame"] = true
 	}
 
-	if WhitelistedNames[child.ClassName] then
+if WhitelistedNames[child.ClassName] then
 		child:GetPropertyChangedSignal("Size"):Connect(function()
 			if typeof(Frame)=="Instance" and Frame:IsA("ScrollingFrame") then
 				Frame.AutomaticCanvasSize = Enum.AutomaticSize.Y
@@ -214,13 +183,13 @@ local handleChildSize; handleChildSize = function(child: Instance, Frame, ...) -
 		end)
 	end
 
-	local Cached = {}
+local Cached = {}
 	HandleEvent(child.ChildAdded:Connect(function(_child)
 		Cached[_child] = _child
 		handleChildSize(_child, Frame, unpack(arg))
 	end))
 
-	for a, b in next, child:GetDescendants() do
+for a, b in next, child:GetDescendants() do
 		if not Cached[b] then
 			Cached[b] = b
 			handleChildSize(b, Frame, unpack(arg))
@@ -230,9 +199,9 @@ end
 
 do -- Main UI
 	UI = Instance.new("SurfaceGui")
-
-	UI["ResetOnSpawn"] = false
-	UI["Face"] = Enum.NormalId.Back
+ 
+UI["ResetOnSpawn"] = false
+UI["Face"] = Enum.NormalId.Back
 	UI["SizingMode"] = Enum.SurfaceGuiSizingMode.PixelsPerStud
 	UI["ClipsDescendants"] = true
 	UI["Adornee"] = Part
@@ -241,7 +210,7 @@ do -- Main UI
 	UI["AlwaysOnTop"] = true
 	UI["Parent"] = Part
 
-    Frame = Instance.new("ImageButton")
+  Frame = Instance.new("ImageButton")
 	Frame["BorderSizePixel"] = 0
 	Frame["Name"] = "Frame"
 	Frame["BackgroundColor3"] = Color3.fromRGB(30.00000011175871, 30.00000011175871, 30.00000011175871)
@@ -253,15 +222,15 @@ do -- Main UI
 	Frame["BackgroundTransparency"] = 1
 	Frame["Parent"] = UI
 	
-	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint["AspectRatio"] = 1.75
 	UIAspectRatioConstraint["Parent"] = Frame
-	
-	local UICorner = Instance.new("UICorner")
+
+local UICorner = Instance.new("UICorner")
 	UICorner["CornerRadius"] = UDim.new(0, 0)
 	UICorner["Parent"] = Frame
 	
-	local Main = Instance.new("ImageLabel")
+local Main = Instance.new("ImageLabel")
 	Main["BorderSizePixel"] = 0
 	Main["ScaleType"] = Enum.ScaleType.Tile
 	Main["BackgroundColor3"] = Color3.fromRGB(16.000000946223736, 16.000000946223736, 16.000000946223736)
@@ -275,7 +244,7 @@ do -- Main UI
 	Main["Position"] = UDim2.new(0.2609618008136749, 0, 0.043316829949617386, 0)
 	Main["Parent"] = Frame
 	
-	local PlayerName = Instance.new("TextLabel")
+local PlayerName = Instance.new("TextLabel")
 	PlayerName["TextWrapped"] = true
 	PlayerName["BorderSizePixel"] = 0
 	PlayerName["RichText"] = true
@@ -292,11 +261,11 @@ do -- Main UI
 	PlayerName["TextSize"] = 20
 	PlayerName["Parent"] = Main
 	
-	local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint["MaxTextSize"] = 20
 	UITextSizeConstraint["Parent"] = PlayerName
 	
-	local HoverHandler = Instance.new("TextButton")
+local HoverHandler = Instance.new("TextButton")
 	HoverHandler["TextWrapped"] = true
 	HoverHandler["BorderSizePixel"] = 0
 	HoverHandler["Name"] = "HoverHandler"
@@ -313,11 +282,11 @@ do -- Main UI
 	HoverHandler["BackgroundTransparency"] = 1
 	HoverHandler["Parent"] = PlayerName
 	
-	local UITextSizeConstraint_1 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_1 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_1["MaxTextSize"] = 14
 	UITextSizeConstraint_1["Parent"] = HoverHandler
 	
-	local Line = Instance.new("Frame")
+local Line = Instance.new("Frame")
 	Line["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	Line["Name"] = "Line"
 	Line["Size"] = UDim2.new(0.29216468334198, 0, 0.0013550135772675276, 0)
@@ -325,15 +294,15 @@ do -- Main UI
 	Line["Position"] = UDim2.new(0.3533494770526886, 0, 0.0704626515507698, 0)
 	Line["Parent"] = Main
 	
-	local UICorner_1 = Instance.new("UICorner")
+local UICorner_1 = Instance.new("UICorner")
 	UICorner_1["CornerRadius"] = UDim.new(0, 0)
 	UICorner_1["Parent"] = Main
 	
-	local UIAspectRatioConstraint_1 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_1 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_1["AspectRatio"] = 0.9137048125267029
 	UIAspectRatioConstraint_1["Parent"] = Main
 	
-	local Left = Instance.new("Frame")
+local Left = Instance.new("Frame")
 	Left["BorderSizePixel"] = 0
 	Left["BackgroundColor3"] = Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)
 	Left["Name"] = "Left"
@@ -343,7 +312,7 @@ do -- Main UI
 	Left["Position"] = UDim2.new(0.004263971466571093, 0, 0.043316785246133804, 0)
 	Left["Parent"] = Frame
 	
-	local Frame_1 = Instance.new("ScrollingFrame")
+local Frame_1 = Instance.new("ScrollingFrame")
 	Frame_1["Active"] = true
 	Frame_1["BorderSizePixel"] = 0
 	Frame_1["Name"] = "Frame"
@@ -357,25 +326,25 @@ do -- Main UI
 	Frame_1["Parent"] = Left
 	
 
-	local UIAspectRatioConstraint_2 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_2 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_2["AspectRatio"] = 0.48230084776878357
 	UIAspectRatioConstraint_2["Parent"] = Frame_1
 	
-	local UIListLayout = Instance.new("UIListLayout")
+local UIListLayout = Instance.new("UIListLayout")
 	UIListLayout["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
 	UIListLayout["Padding"] = UDim.new(0, 2)
 	UIListLayout["SortOrder"] = Enum.SortOrder.LayoutOrder
 	UIListLayout["Parent"] = Frame_1
 	
-	local UICorner_2 = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
 	UICorner_2["CornerRadius"] = UDim.new(0.029999999329447746, 0)
 	UICorner_2["Parent"] = Left
 	
-	local UIAspectRatioConstraint_3 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_3 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_3["AspectRatio"] = 0.4793006479740143
 	UIAspectRatioConstraint_3["Parent"] = Left
 	
-	local Right = Instance.new("Frame")
+local Right = Instance.new("Frame")
 	Right["BorderSizePixel"] = 0
 	Right["BackgroundColor3"] = Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)
 	Right["Name"] = "Right"
@@ -385,7 +354,7 @@ do -- Main UI
 	Right["Position"] = UDim2.new(0.7447751760482788, 0, 0.043316829949617386, 0)
 	Right["Parent"] = Frame
 	
-	local Frame_2 = Instance.new("ScrollingFrame")
+local Frame_2 = Instance.new("ScrollingFrame")
 	Frame_2["Active"] = true
 	Frame_2["BorderSizePixel"] = 0
 	Frame_2["Name"] = "Frame"
@@ -398,17 +367,17 @@ do -- Main UI
 	Frame_2["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	Frame_2["Parent"] = Right
 
-	local UIListLayout_1 = Instance.new("UIListLayout")
+local UIListLayout_1 = Instance.new("UIListLayout")
 	UIListLayout_1["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
 	UIListLayout_1["Padding"] = UDim.new(0, 4)
 	UIListLayout_1["SortOrder"] = Enum.SortOrder.LayoutOrder
 	UIListLayout_1["Parent"] = Frame_2
 	
-	local UIAspectRatioConstraint_4 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_4 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_4["AspectRatio"] = 0.48230084776878357
 	UIAspectRatioConstraint_4["Parent"] = Frame_2
 	
-	local MINIMIZE = Instance.new("TextButton")
+local MINIMIZE = Instance.new("TextButton")
 	MINIMIZE["TextWrapped"] = true
 	MINIMIZE["BorderSizePixel"] = 0
 	MINIMIZE["Name"] = "MINIMIZE"
@@ -424,19 +393,19 @@ do -- Main UI
 	MINIMIZE["Font"] = Enum.Font.SourceSans
 	MINIMIZE["Parent"] = Right
 	
-	local UITextSizeConstraint_2 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_2 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_2["MaxTextSize"] = 14
 	UITextSizeConstraint_2["Parent"] = MINIMIZE
 	
-	local UICorner_3 = Instance.new("UICorner")
+local UICorner_3 = Instance.new("UICorner")
 	UICorner_3["CornerRadius"] = UDim.new(1, 0)
 	UICorner_3["Parent"] = MINIMIZE
 	
-	local UIGradient = Instance.new("UIGradient")
+local UIGradient = Instance.new("UIGradient")
 	UIGradient["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(145.00000655651093, 145.00000655651093, 10.000000353902578)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(191.00000381469727, 143.00000667572021, 0)) })
 	UIGradient["Parent"] = MINIMIZE
 	
-	local EXIT = Instance.new("TextButton")
+  local EXIT = Instance.new("TextButton")
 	EXIT["TextWrapped"] = true
 	EXIT["BorderSizePixel"] = 0
 	EXIT["Name"] = "EXIT"
@@ -452,27 +421,27 @@ do -- Main UI
 	EXIT["Font"] = Enum.Font.SourceSans
 	EXIT["Parent"] = Right
 	
-	local UITextSizeConstraint_3 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_3 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_3["MaxTextSize"] = 14
 	UITextSizeConstraint_3["Parent"] = EXIT
 	
-	local UICorner_4 = Instance.new("UICorner")
+local UICorner_4 = Instance.new("UICorner")
 	UICorner_4["CornerRadius"] = UDim.new(1, 0)
 	UICorner_4["Parent"] = EXIT
 	
-	local UIGradient_1 = Instance.new("UIGradient")
+local UIGradient_1 = Instance.new("UIGradient")
 	UIGradient_1["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(145.00000655651093, 6.000000117346644, 8.000000473111868)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(191.00000381469727, 0, 0)) })
 	UIGradient_1["Parent"] = EXIT
 	
-	local UICorner_5 = Instance.new("UICorner")
+local UICorner_5 = Instance.new("UICorner")
 	UICorner_5["CornerRadius"] = UDim.new(0.029999999329447746, 0)
 	UICorner_5["Parent"] = Right
 	
-	local UIAspectRatioConstraint_5 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_5 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_5["AspectRatio"] = 0.4793006479740143
 	UIAspectRatioConstraint_5["Parent"] = Right
 	
-	local UIAspectRatioConstraint_6 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_6 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_6["AspectRatio"] = 1.9428621530532837
 	UIAspectRatioConstraint_6["Parent"] = UI
 	
@@ -480,7 +449,7 @@ end
 
 do -- UI Elements
 
-	local UI_Examples = Examples
+local UI_Examples = Examples
 	local Keybind = Instance.new("Frame")
 	Keybind["BorderSizePixel"] = 0
 	Keybind["BackgroundColor3"] = Color3.fromRGB(0, 0, 0)
@@ -491,7 +460,7 @@ do -- UI Elements
 	Keybind["Position"] = UDim2.new(0.08406495302915573, 0, 4.501474037965636e-08, 0)
 	Keybind["Parent"] = UI_Examples
 	
-	local ViewKeybind = Instance.new("ImageButton")
+local ViewKeybind = Instance.new("ImageButton")
 	ViewKeybind["BorderSizePixel"] = 0
 	ViewKeybind["Name"] = "ViewKeybind"
 	ViewKeybind["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
@@ -502,7 +471,7 @@ do -- UI Elements
 	ViewKeybind["Position"] = UDim2.new(0.5060985684394836, 0, 0.21320509910583496, 0)
 	ViewKeybind["Parent"] = Keybind
 	
-	local Label = Instance.new("TextLabel")
+local Label = Instance.new("TextLabel")
 	Label["TextWrapped"] = true
 	Label["BorderSizePixel"] = 0
 	Label["Name"] = "Label"
@@ -520,19 +489,19 @@ do -- UI Elements
 	Label["TextSize"] = 11
 	Label["Parent"] = ViewKeybind
 	
-	local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint["MaxTextSize"] = 17
 	UITextSizeConstraint["Parent"] = Label
 	
-	local UIGradient = Instance.new("UIGradient")
+local UIGradient = Instance.new("UIGradient")
 	UIGradient["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(20.000000707805157, 20.000000707805157, 20.000000707805157)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)) })
 	UIGradient["Parent"] = ViewKeybind
 	
-	local UICorner = Instance.new("UICorner")
+local UICorner = Instance.new("UICorner")
 	UICorner["CornerRadius"] = UDim.new(0, 4)
 	UICorner["Parent"] = ViewKeybind
 	
-	local Button = Instance.new("TextButton")
+  local Button = Instance.new("TextButton")
 	Button["TextWrapped"] = true
 	Button["BorderSizePixel"] = 0
 	Button["RichText"] = true
@@ -549,23 +518,23 @@ do -- UI Elements
 	Button["BackgroundTransparency"] = 1
 	Button["Parent"] = ViewKeybind
 	
-	local UITextSizeConstraint_1 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_1 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_1["MaxTextSize"] = 15
 	UITextSizeConstraint_1["Parent"] = Button
 	
-	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
-	UIAspectRatioConstraint["AspectRatio"] = 3.5923664569854736
+local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+UIAspectRatioConstraint["AspectRatio"] = 3.5923664569854736
 	UIAspectRatioConstraint["Parent"] = Button
 	
-	local UIAspectRatioConstraint_1 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_1 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_1["AspectRatio"] = 3.7082154750823975
 	UIAspectRatioConstraint_1["Parent"] = ViewKeybind
 	
-	local UIAspectRatioConstraint_2 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_2 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_2["AspectRatio"] = 6.634146213531494
 	UIAspectRatioConstraint_2["Parent"] = Keybind
 	
-	local Label_1 = Instance.new("Frame")
+  local Label_1 = Instance.new("Frame")
 	Label_1["BorderSizePixel"] = 0
 	Label_1["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	Label_1["Name"] = "Label"
@@ -575,15 +544,15 @@ do -- UI Elements
 	Label_1["Position"] = UDim2.new(0.2133532166481018, 0, 0.15854917466640472, 0)
 	Label_1["Parent"] = UI_Examples
 	
-	local UICorner_1 = Instance.new("UICorner")
+local UICorner_1 = Instance.new("UICorner")
 	UICorner_1["CornerRadius"] = UDim.new(0, 4)
 	UICorner_1["Parent"] = Label_1
 	
-	local UIGradient_1 = Instance.new("UIGradient")
+local UIGradient_1 = Instance.new("UIGradient")
 	UIGradient_1["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(20.000000707805157, 20.000000707805157, 20.000000707805157)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)) })
 	UIGradient_1["Parent"] = Label_1
 	
-	local Label_2 = Instance.new("TextLabel")
+local Label_2 = Instance.new("TextLabel")
 	Label_2["TextWrapped"] = true
 	Label_2["BorderSizePixel"] = 0
 	Label_2["RichText"] = true
@@ -599,11 +568,11 @@ do -- UI Elements
 	Label_2["TextSize"] = 14
 	Label_2["Parent"] = Label_1
 	
-	local UITextSizeConstraint_2 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_2 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_2["MaxTextSize"] = 17
 	UITextSizeConstraint_2["Parent"] = Label_2
 	
-	local Slider = Instance.new("Frame")
+local Slider = Instance.new("Frame")
 	Slider["BorderSizePixel"] = 0
 	Slider["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	Slider["Name"] = "Slider"
@@ -613,7 +582,7 @@ do -- UI Elements
 	Slider["Position"] = UDim2.new(0.033602237701416016, 0, 0.0649019330739975, 0)
 	Slider["Parent"] = UI_Examples
 	
-	local ViewSlider = Instance.new("ImageButton")
+local ViewSlider = Instance.new("ImageButton")
 	ViewSlider["BorderSizePixel"] = 0
 	ViewSlider["Name"] = "ViewSlider"
 	ViewSlider["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
@@ -624,7 +593,7 @@ do -- UI Elements
 	ViewSlider["Position"] = UDim2.new(0.20327869057655334, 0, 0.49191224575042725, 0)
 	ViewSlider["Parent"] = Slider
 	
-	local Label_3 = Instance.new("TextLabel")
+local Label_3 = Instance.new("TextLabel")
 	Label_3["TextWrapped"] = true
 	Label_3["BorderSizePixel"] = 0
 	Label_3["Name"] = "Label"
@@ -641,11 +610,11 @@ do -- UI Elements
 	Label_3["TextSize"] = 17
 	Label_3["Parent"] = ViewSlider
 	
-	local UITextSizeConstraint_3 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_3 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_3["MaxTextSize"] = 17
 	UITextSizeConstraint_3["Parent"] = Label_3
 	
-	local Button_1 = Instance.new("ImageButton")
+local Button_1 = Instance.new("ImageButton")
 	Button_1["BorderSizePixel"] = 0
 	Button_1["Name"] = "Button"
 	Button_1["BackgroundColor3"] = Color3.fromRGB(107.00000122189522, 107.00000122189522, 107.00000122189522)
@@ -656,23 +625,23 @@ do -- UI Elements
 	Button_1["LayoutOrder"] = 1
 	Button_1["Parent"] = ViewSlider
 	
-	local UIGradient_2 = Instance.new("UIGradient")
+local UIGradient_2 = Instance.new("UIGradient")
 	UIGradient_2["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(60.00000022351742, 164.00000542402267, 255)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(35.00000171363354, 105.00000134110451, 255)) })
 	UIGradient_2["Parent"] = Button_1
 	
-	local UICorner_2 = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
 	UICorner_2["CornerRadius"] = UDim.new(0, 4)
 	UICorner_2["Parent"] = Button_1
 	
-	local UIGradient_3 = Instance.new("UIGradient")
+local UIGradient_3 = Instance.new("UIGradient")
 	UIGradient_3["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(20.000000707805157, 20.000000707805157, 20.000000707805157)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)) })
 	UIGradient_3["Parent"] = ViewSlider
 	
-	local UICorner_3 = Instance.new("UICorner")
+local UICorner_3 = Instance.new("UICorner")
 	UICorner_3["CornerRadius"] = UDim.new(0, 4)
 	UICorner_3["Parent"] = ViewSlider
 	
-	local Value = Instance.new("TextLabel")
+local Value = Instance.new("TextLabel")
 	Value["TextWrapped"] = true
 	Value["BorderSizePixel"] = 0
 	Value["Name"] = "Value"
@@ -689,19 +658,19 @@ do -- UI Elements
 	Value["TextSize"] = 17
 	Value["Parent"] = ViewSlider
 	
-	local UITextSizeConstraint_4 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_4 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_4["MaxTextSize"] = 16
 	UITextSizeConstraint_4["Parent"] = Value
 	
-	local UIAspectRatioConstraint_3 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_3 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_3["AspectRatio"] = 7.995800018310547
 	UIAspectRatioConstraint_3["Parent"] = ViewSlider
 	
-	local UIAspectRatioConstraint_4 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_4 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_4["AspectRatio"] = 5.865384578704834
 	UIAspectRatioConstraint_4["Parent"] = Slider
 	
-	local Toggle = Instance.new("Frame")
+local Toggle = Instance.new("Frame")
 	Toggle["BorderSizePixel"] = 0
 	Toggle["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	Toggle["Name"] = "Toggle"
@@ -711,7 +680,7 @@ do -- UI Elements
 	Toggle["Position"] = UDim2.new(0.033602237701416016, 0, 0.17700520157814026, 0)
 	Toggle["Parent"] = UI_Examples
 	
-	local ViewToggle = Instance.new("ImageButton")
+local ViewToggle = Instance.new("ImageButton")
 	ViewToggle["BorderSizePixel"] = 0
 	ViewToggle["Name"] = "ViewToggle"
 	ViewToggle["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
@@ -722,7 +691,7 @@ do -- UI Elements
 	ViewToggle["Position"] = UDim2.new(0.6262291073799133, 0, 0.08806588500738144, 0)
 	ViewToggle["Parent"] = Toggle
 	
-	local Label_4 = Instance.new("TextLabel")
+local Label_4 = Instance.new("TextLabel")
 	Label_4["TextWrapped"] = true
 	Label_4["BorderSizePixel"] = 0
 	Label_4["Name"] = "Label"
@@ -739,11 +708,11 @@ do -- UI Elements
 	Label_4["TextSize"] = 17
 	Label_4["Parent"] = ViewToggle
 	
-	local UITextSizeConstraint_5 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_5 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_5["MaxTextSize"] = 17
 	UITextSizeConstraint_5["Parent"] = Label_4
 	
-	local Button_2 = Instance.new("ImageButton")
+local Button_2 = Instance.new("ImageButton")
 	Button_2["BorderSizePixel"] = 0
 	Button_2["Name"] = "Button"
 	Button_2["BackgroundColor3"] = Color3.fromRGB(107.00000122189522, 107.00000122189522, 107.00000122189522)
@@ -755,35 +724,35 @@ do -- UI Elements
 	Button_2["LayoutOrder"] = 1
 	Button_2["Parent"] = ViewToggle
 	
-	local UIGradient_4 = Instance.new("UIGradient")
+local UIGradient_4 = Instance.new("UIGradient")
 	UIGradient_4["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(60.00000022351742, 164.00000542402267, 255)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(35.00000171363354, 105.00000134110451, 255)) })
 	UIGradient_4["Parent"] = Button_2
 	
-	local UICorner_4 = Instance.new("UICorner")
+local UICorner_4 = Instance.new("UICorner")
 	UICorner_4["CornerRadius"] = UDim.new(0, 4)
 	UICorner_4["Parent"] = Button_2
 	
-	local UIAspectRatioConstraint_5 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_5 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_5["AspectRatio"] = 1.190542459487915
 	UIAspectRatioConstraint_5["Parent"] = Button_2
 	
-	local UIGradient_5 = Instance.new("UIGradient")
+local UIGradient_5 = Instance.new("UIGradient")
 	UIGradient_5["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(20.000000707805157, 20.000000707805157, 20.000000707805157)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)) })
 	UIGradient_5["Parent"] = ViewToggle
 	
-	local UICorner_5 = Instance.new("UICorner")
+local UICorner_5 = Instance.new("UICorner")
 	UICorner_5["CornerRadius"] = UDim.new(0, 4)
 	UICorner_5["Parent"] = ViewToggle
 	
-	local UIAspectRatioConstraint_6 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_6 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_6["AspectRatio"] = 2.5414950847625732
 	UIAspectRatioConstraint_6["Parent"] = ViewToggle
 	
-	local UIAspectRatioConstraint_7 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_7 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_7["AspectRatio"] = 8.714285850524902
 	UIAspectRatioConstraint_7["Parent"] = Toggle
 	
-	local Button_3 = Instance.new("ImageButton")
+local Button_3 = Instance.new("ImageButton")
 	Button_3["BorderSizePixel"] = 0
 	Button_3["Name"] = "Button"
 	Button_3["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
@@ -794,7 +763,7 @@ do -- UI Elements
 	Button_3["BackgroundTransparency"] = 0.10000000149011612
 	Button_3["Parent"] = UI_Examples
 	
-	local Label_5 = Instance.new("TextLabel")
+local Label_5 = Instance.new("TextLabel")
 	Label_5["TextWrapped"] = true
 	Label_5["BorderSizePixel"] = 0
 	Label_5["Name"] = "Label"
@@ -810,23 +779,23 @@ do -- UI Elements
 	Label_5["TextSize"] = 17
 	Label_5["Parent"] = Button_3
 	
-	local UITextSizeConstraint_6 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_6 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_6["MaxTextSize"] = 17
 	UITextSizeConstraint_6["Parent"] = Label_5
 	
-	local UIGradient_6 = Instance.new("UIGradient")
+local UIGradient_6 = Instance.new("UIGradient")
 	UIGradient_6["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(20.000000707805157, 20.000000707805157, 20.000000707805157)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)) })
 	UIGradient_6["Parent"] = Button_3
 	
-	local UICorner_6 = Instance.new("UICorner")
+local UICorner_6 = Instance.new("UICorner")
 	UICorner_6["CornerRadius"] = UDim.new(0, 4)
 	UICorner_6["Parent"] = Button_3
 	
-	local UIAspectRatioConstraint_8 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_8 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_8["AspectRatio"] = 7.239999771118164
 	UIAspectRatioConstraint_8["Parent"] = Button_3
 	
-	local Section = Instance.new("Frame")
+local Section = Instance.new("Frame")
 	Section["BorderSizePixel"] = 0
 	Section["BackgroundColor3"] = Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)
 	Section["Name"] = "Section"
@@ -836,11 +805,11 @@ do -- UI Elements
 	Section["Position"] = UDim2.new(-4.314098589475179e-08, 0, -1.0403466532693528e-08, 0)
 	Section["Parent"] = UI_Examples
 	
-	local UICorner_7 = Instance.new("UICorner")
-	UICorner_7["CornerRadius"] = UDim.new(0, 0)
+local UICorner_7 = Instance.new("UICorner")
+UICorner_7["CornerRadius"] = UDim.new(0, 0)
 	UICorner_7["Parent"] = Section
 	
-	local _Frame = Instance.new("ScrollingFrame")
+local _Frame = Instance.new("ScrollingFrame")
 	_Frame["Active"] = true
 	_Frame["BorderSizePixel"] = 0
 	_Frame["Name"] = "_Frame"
@@ -854,14 +823,14 @@ do -- UI Elements
 	_Frame["Parent"] = Section
 	handleChildSize(_Frame, _Frame)
 
-	local UIListLayout = Instance.new("UIListLayout")
+local UIListLayout = Instance.new("UIListLayout")
 	UIListLayout["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
 	UIListLayout["Padding"] = UDim.new(0, 1)
 	UIListLayout["SortOrder"] = Enum.SortOrder.LayoutOrder
 	UIListLayout["Parent"] = _Frame
 	
-	local Label_6 = Instance.new("TextButton")
-	Label_6["TextWrapped"] = true
+local Label_6 = Instance.new("TextButton")
+Label_6["TextWrapped"] = true
 	Label_6["BorderSizePixel"] = 0
 	Label_6["Name"] = "Label"
 	Label_6["TextSize"] = 15
@@ -876,11 +845,11 @@ do -- UI Elements
 	Label_6["BackgroundTransparency"] = 1
 	Label_6["Parent"] = Section
 	
-	local UITextSizeConstraint_7 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_7 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_7["MaxTextSize"] = 15
 	UITextSizeConstraint_7["Parent"] = Label_6
 	
-	local Line = Instance.new("Frame")
+local Line = Instance.new("Frame")
 	Line["BackgroundColor3"] = Color3.fromRGB(0, 0, 0)
 	Line["Name"] = "Line"
 	Line["Size"] = UDim2.new(0.29216468334198, 0, 0.0013550135772675276, 0)
@@ -890,7 +859,7 @@ do -- UI Elements
 	
 	-------------------------------------------
 
-	local ColorPicker = Instance.new("Frame")
+local ColorPicker = Instance.new("Frame")
 	ColorPicker["BorderSizePixel"] = 0
 	ColorPicker["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	ColorPicker["Name"] = "ColorPicker"
@@ -900,7 +869,7 @@ do -- UI Elements
 	ColorPicker["Position"] = UDim2.new(0.21557384729385376, 0, 0.2920585572719574, 0)
 	ColorPicker["Parent"] = Examples
 	
-	local ViewColor = Instance.new("ImageButton")
+local ViewColor = Instance.new("ImageButton")
 	ViewColor["BorderSizePixel"] = 0
 	ViewColor["Name"] = "ViewColor"
 	ViewColor["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
@@ -912,7 +881,7 @@ do -- UI Elements
 	ViewColor["BackgroundTransparency"] = 0.10000000149011612
 	ViewColor["Parent"] = ColorPicker
 	
-	local Label = Instance.new("TextLabel")
+local Label = Instance.new("TextLabel")
 	Label["TextWrapped"] = true
 	Label["BorderSizePixel"] = 0
 	Label["Name"] = "Label"
@@ -929,23 +898,23 @@ do -- UI Elements
 	Label["TextSize"] = 17
 	Label["Parent"] = ViewColor
 	
-	local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint["MaxTextSize"] = 17
 	UITextSizeConstraint["Parent"] = Label
 	
-	local UIGradient = Instance.new("UIGradient")
+local UIGradient = Instance.new("UIGradient")
 	UIGradient["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(20.000000707805157, 20.000000707805157, 20.000000707805157)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)) })
 	UIGradient["Parent"] = ViewColor
 	
-	local UICorner = Instance.new("UICorner")
+local UICorner = Instance.new("UICorner")
 	UICorner["CornerRadius"] = UDim.new(0, 2)
 	UICorner["Parent"] = ViewColor
 	
-	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint["AspectRatio"] = 7.239999771118164
 	UIAspectRatioConstraint["Parent"] = ViewColor
 	
-	local Frame = Instance.new("Frame")
+local Frame = Instance.new("Frame")
 	Frame["BorderSizePixel"] = 0
 	Frame["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	Frame["Size"] = UDim2.new(0, 181, 0, 1)
@@ -954,15 +923,15 @@ do -- UI Elements
 	Frame["Position"] = UDim2.new(-0.0027583844494074583, 0, 0.9709985256195068, 0)
 	Frame["Parent"] = ViewColor
 	
-	local UIGradient_1 = Instance.new("UIGradient")
+local UIGradient_1 = Instance.new("UIGradient")
 	UIGradient_1["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(20.000000707805157, 20.000000707805157, 20.000000707805157)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)) })
 	UIGradient_1["Parent"] = Frame
 	
-	local UICorner_1 = Instance.new("UICorner")
+local UICorner_1 = Instance.new("UICorner")
 	UICorner_1["CornerRadius"] = UDim.new(0, 0)
 	UICorner_1["Parent"] = Frame
 	
-	local ColourWheel = Instance.new("ImageButton")
+local ColourWheel = Instance.new("ImageButton")
 	ColourWheel["Active"] = false
 	ColourWheel["BorderSizePixel"] = 0
 	ColourWheel["Name"] = "ColourWheel"
@@ -976,11 +945,11 @@ do -- UI Elements
 	ColourWheel["BackgroundTransparency"] = 1
 	ColourWheel["Parent"] = Frame
 	
-	local UIAspectRatioConstraint_1 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_1 = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint_1["AspectRatio"] = 0.9999999403953552
 	UIAspectRatioConstraint_1["Parent"] = ColourWheel
 	
-	local Picker = Instance.new("ImageLabel")
+local Picker = Instance.new("ImageLabel")
 	Picker["BorderSizePixel"] = 0
 	Picker["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	Picker["Name"] = "Picker"
@@ -991,7 +960,7 @@ do -- UI Elements
 	Picker["Position"] = UDim2.new(0.5000001192092896, 0, 0.4915757179260254, 0)
 	Picker["Parent"] = ColourWheel
 	
-	local DarknessPicker = Instance.new("ImageButton")
+local DarknessPicker = Instance.new("ImageButton")
 	DarknessPicker["BorderSizePixel"] = 0
 	DarknessPicker["Name"] = "DarknessPicker"
 	DarknessPicker["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
@@ -1002,7 +971,7 @@ do -- UI Elements
 	DarknessPicker["Position"] = UDim2.new(0.7619521021842957, 0, 0.1122029647231102, 0)
 	DarknessPicker["Parent"] = Frame
 	
-	local Slider = Instance.new("ImageLabel")
+local Slider = Instance.new("ImageLabel")
 	Slider["ZIndex"] = 2
 	Slider["BorderSizePixel"] = 0
 	Slider["SliceCenter"] = Rect.new(100, 100, 100, 100)
@@ -1019,16 +988,16 @@ do -- UI Elements
 	Slider["SliceScale"] = 0.11999999731779099
 	Slider["Parent"] = DarknessPicker
 	
-	local UIGradient_2 = Instance.new("UIGradient")
+local UIGradient_2 = Instance.new("UIGradient")
 	UIGradient_2["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0)) })
 	UIGradient_2["Rotation"] = 90
 	UIGradient_2["Parent"] = DarknessPicker
 	
-	local UICorner_2 = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
 	UICorner_2["CornerRadius"] = UDim.new(0, 4)
 	UICorner_2["Parent"] = DarknessPicker
 	
-	local R = Instance.new("TextBox")
+local R = Instance.new("TextBox")
 	R["BorderSizePixel"] = 0
 	R["TextEditable"] = false
 	R["Name"] = "R"
@@ -1043,7 +1012,7 @@ do -- UI Elements
 	R["ClearTextOnFocus"] = false
 	R["Parent"] = Frame
 	
-	local TextLabel = Instance.new("TextLabel")
+local TextLabel = Instance.new("TextLabel")
 	TextLabel["BorderSizePixel"] = 0
 	TextLabel["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	TextLabel["FontFace"] = Font.new("rbxasset://fonts/families/Balthazar.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
@@ -1057,7 +1026,7 @@ do -- UI Elements
 	TextLabel["TextSize"] = 16
 	TextLabel["Parent"] = R
 	
-	local G = Instance.new("TextBox")
+local G = Instance.new("TextBox")
 	G["BorderSizePixel"] = 0
 	G["TextEditable"] = false
 	G["Name"] = "G"
@@ -1072,7 +1041,7 @@ do -- UI Elements
 	G["ClearTextOnFocus"] = false
 	G["Parent"] = Frame
 	
-	local TextLabel_1 = Instance.new("TextLabel")
+local TextLabel_1 = Instance.new("TextLabel")
 	TextLabel_1["BorderSizePixel"] = 0
 	TextLabel_1["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	TextLabel_1["FontFace"] = Font.new("rbxasset://fonts/families/Balthazar.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
@@ -1086,7 +1055,7 @@ do -- UI Elements
 	TextLabel_1["TextSize"] = 16
 	TextLabel_1["Parent"] = G
 	
-	local B = Instance.new("TextBox")
+local B = Instance.new("TextBox")
 	B["BorderSizePixel"] = 0
 	B["TextEditable"] = false
 	B["Name"] = "B"
@@ -1101,7 +1070,7 @@ do -- UI Elements
 	B["ClearTextOnFocus"] = false
 	B["Parent"] = Frame
 	
-	local TextLabel_2 = Instance.new("TextLabel")
+local TextLabel_2 = Instance.new("TextLabel")
 	TextLabel_2["BorderSizePixel"] = 0
 	TextLabel_2["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	TextLabel_2["FontFace"] = Font.new("rbxasset://fonts/families/Balthazar.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
@@ -1115,7 +1084,7 @@ do -- UI Elements
 	TextLabel_2["TextSize"] = 16
 	TextLabel_2["Parent"] = B
 	
-	local ColorDisplay = Instance.new("ImageLabel")
+local ColorDisplay = Instance.new("ImageLabel")
 	ColorDisplay["BorderSizePixel"] = 0
 	ColorDisplay["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	ColorDisplay["Name"] = "ColorDisplay"
@@ -1126,11 +1095,11 @@ do -- UI Elements
 	ColorDisplay["Position"] = UDim2.new(0.8313602209091187, 0, 0.15369506180286407, 0)
 	ColorDisplay["Parent"] = ViewColor
 	
-	local UICorner_3 = Instance.new("UICorner")
+local UICorner_3 = Instance.new("UICorner")
 	UICorner_3["CornerRadius"] = UDim.new(0, 4)
 	UICorner_3["Parent"] = ColorDisplay
 	
-	local Line = Instance.new("Frame")
+local Line = Instance.new("Frame")
 	Line["BorderSizePixel"] = 0
 	Line["BackgroundColor3"] = Color3.fromRGB(0, 0, 0)
 	Line["Name"] = "Line"
@@ -1142,7 +1111,7 @@ do -- UI Elements
 	------------------------------------------------
 
 
-	local Dropdown = Instance.new("Frame")
+local Dropdown = Instance.new("Frame")
 	Dropdown["BorderSizePixel"] = 0
 	Dropdown["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	Dropdown["Name"] = "Dropdown"
@@ -1152,7 +1121,7 @@ do -- UI Elements
 	Dropdown["Position"] = UDim2.new(0.21557384729385376, 0, 0.2920585572719574, 0)
 	Dropdown["Parent"] = Examples
 	
-	local ViewDropdown = Instance.new("ImageButton")
+local ViewDropdown = Instance.new("ImageButton")
 	ViewDropdown["BorderSizePixel"] = 0
 	ViewDropdown["Name"] = "ViewDropdown"
 	ViewDropdown["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
@@ -1164,7 +1133,7 @@ do -- UI Elements
 	ViewDropdown["BackgroundTransparency"] = 0.10000000149011612
 	ViewDropdown["Parent"] = Dropdown
 	
-	local Label = Instance.new("TextLabel")
+local Label = Instance.new("TextLabel")
 	Label["TextWrapped"] = true
 	Label["BorderSizePixel"] = 0
 	Label["Name"] = "Label"
@@ -1181,23 +1150,23 @@ do -- UI Elements
 	Label["TextSize"] = 17
 	Label["Parent"] = ViewDropdown
 	
-	local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint["MaxTextSize"] = 17
 	UITextSizeConstraint["Parent"] = Label
 	
-	local UIGradient = Instance.new("UIGradient")
+local UIGradient = Instance.new("UIGradient")
 	UIGradient["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(20.000000707805157, 20.000000707805157, 20.000000707805157)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)) })
 	UIGradient["Parent"] = ViewDropdown
 	
-	local UICorner = Instance.new("UICorner")
+local UICorner = Instance.new("UICorner")
 	UICorner["CornerRadius"] = UDim.new(0, 2)
 	UICorner["Parent"] = ViewDropdown
 	
-	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 	UIAspectRatioConstraint["AspectRatio"] = 7.239999771118164
 	UIAspectRatioConstraint["Parent"] = ViewDropdown
 	
-	local Symbol = Instance.new("TextLabel")
+local Symbol = Instance.new("TextLabel")
 	Symbol["TextWrapped"] = true
 	Symbol["BorderSizePixel"] = 0
 	Symbol["Name"] = "Symbol"
@@ -1213,11 +1182,11 @@ do -- UI Elements
 	Symbol["TextSize"] = 16
 	Symbol["Parent"] = ViewDropdown
 	
-	local UITextSizeConstraint_1 = Instance.new("UITextSizeConstraint")
+local UITextSizeConstraint_1 = Instance.new("UITextSizeConstraint")
 	UITextSizeConstraint_1["MaxTextSize"] = 17
 	UITextSizeConstraint_1["Parent"] = Symbol
 	
-	local Frame = Instance.new("Frame")
+local Frame = Instance.new("Frame")
 	Frame["BorderSizePixel"] = 0
 	Frame["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
 	Frame["Size"] = UDim2.new(0, 181, 0, 0)
@@ -1226,15 +1195,15 @@ do -- UI Elements
 	Frame["Position"] = UDim2.new(-0.002761082025244832, 0, 0.9710034132003784, 0)
 	Frame["Parent"] = ViewDropdown
 	
-	local UIGradient_1 = Instance.new("UIGradient")
+local UIGradient_1 = Instance.new("UIGradient")
 	UIGradient_1["Color"] = ColorSequence.new({  ColorSequenceKeypoint.new(0, Color3.fromRGB(20.000000707805157, 20.000000707805157, 20.000000707805157)) , ColorSequenceKeypoint.new(1, Color3.fromRGB(10.000000353902578, 10.000000353902578, 10.000000353902578)) })
 	UIGradient_1["Parent"] = Frame
-	
-	local UICorner_1 = Instance.new("UICorner")
-	UICorner_1["CornerRadius"] = UDim.new(0, 0)
+
+local UICorner_1 = Instance.new("UICorner")
+UICorner_1["CornerRadius"] = UDim.new(0, 0)
 	UICorner_1["Parent"] = Frame
 	
-	local Button = Instance.new("TextButton")
+local Button = Instance.new("TextButton")
 	Button["BorderSizePixel"] = 0
 	Button["Name"] = "Button"
 	Button["TextSize"] = 17
@@ -1247,7 +1216,8 @@ do -- UI Elements
 	Button["BackgroundTransparency"] = 1
 	Button["Parent"] = Frame
 	
-	local UIListLayout = Instance.new("UIListLayout")
+local UI
+ListLayout = Instance.new("UIListLayout")
 	UIListLayout["Padding"] = UDim.new(0, 2)
 	UIListLayout["SortOrder"] = Enum.SortOrder.LayoutOrder
 	UIListLayout["Parent"] = Frame	
@@ -1257,67 +1227,66 @@ end
 
 do -- UI Functions
 
-	local _UIExist = tick()
+local _UIExist = tick()
 	local UIExist = function()
 		return (pcall(function()return Part.Name, Part.Parent~=nil and Part or error() end))
 	end
 
-	function Library:Slider( Data: { Text: string, Tab: Frame, Callback: { text: string } }, Min: number, Max: number, Minimum: number, Maximum: number )
+function Library:Slider( Data: { Text: string, Tab: Frame, Callback: { text: string } }, Min: number, Max: number, Minimum: number, Maximum: number )
 
-		Data = type(Data)=="table" and Data or {}
+Data = type(Data)=="table" and Data or {}
 		Data.Name = Data.Name or Data.Text or "Example"
 		Data.Tab = Data.Tab and (function() for i,v in next, Frame:GetDescendants() do if v.ClassName:find("Frame") and v.Name==Data.Tab then return v end end end)() or Frame:FindFirstChild("Right")
 		--Data.Tab = Data.Tab and (function() for i,v in next, Frame:GetDescendants() do if v.ClassName:find("Frame") and v.Name==Data.Tab then return v end end end)() or Frame:FindFirstChild("Right")
 	
-		Data.Min = Data.Min or Data.Minimum or Data.min or Data.minimum or 1
+Data.Min = Data.Min or Data.Minimum or Data.min or Data.minimum or 1
 		Data.Max = Data.Max or Data.Maximum or Data.max or Data.maximum or 10
 	
-		Data.Min = Data.Min > -1 and Data.Min or 1
+Data.Min = Data.Min > -1 and Data.Min or 1
 		Data.Max = Data.Max > Data.Min and Data.Max or Data.Min + 10
 		Data.Value = Data.Value and ( Data.Value >= Data.Min and Data.Value <= Data.Max ) and Data.Value or math.random(Data.Min, Data.Max)
 	
-		Data.Position = Data.Position or nil
+Data.Position = Data.Position or nil
 		Data.Callback = Data.Callback or function() end
 		Data.Step = Data.Step and Data.Step/100 or 0.01
 	
-		local SliderExample = Examples:FindFirstChild("Slider")
+local SliderExample = Examples:FindFirstChild("Slider")
 		local SliderDown = false
 		if not SliderExample then return; end
 	
-		SliderExample = SliderExample:Clone()
+SliderExample = SliderExample:Clone()
 		SliderExample.Name = Data.Name
 		SliderExample.Visible = true
-	
 		SliderExample.ViewSlider.Label.Text = Data.Name
 		SliderExample.ViewSlider.Value.Text = `{Data.Min}/{Data.Max}`
 		SliderExample.ViewSlider.Position = Data.Position or SliderExample.ViewSlider.Position
 		SliderExample.Parent = (Data.Tab:FindFirstChildOfClass("ScrollingFrame") and Data.Tab:FindFirstChildOfClass("ScrollingFrame"):FindFirstChildOfClass("ScrollingFrame") or Data.Tab:FindFirstChildOfClass("ScrollingFrame")) or Data.Tab
-	
-		local bar = SliderExample
+		
+  local bar = SliderExample
 		local mouse = Mouse.Mouse
 		
-		local MouseWasDown = false
+local MouseWasDown = false
 		local cachedValue = Data.Value
 		local prevalue = Data.Value
 		
-		HandleEvent(bar.MouseEnter:Connect(function()
+HandleEvent(bar.MouseEnter:Connect(function()
 			SliderDown = true
 		end))
 		
-		HandleEvent(bar.MouseMoved:Connect(function(X, Y)
+HandleEvent(bar.MouseMoved:Connect(function(X, Y)
 			
-			if not UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then return; end
+if not UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then return; end
 			if not SliderDown then return; end
 			if not UIExist() then return; end
 			
-			MouseWasDown = true
-			local percent = ((X) - bar.ViewSlider.AbsolutePosition.X) / bar.ViewSlider.AbsoluteSize.X
+MouseWasDown = true
+		local percent = ((X) - bar.ViewSlider.AbsolutePosition.X) / bar.ViewSlider.AbsoluteSize.X
 			if cachedValue then percent = (Data.Value - Data.Min) / (Data.Max - Data.Min) end
 	
-			percent = math.clamp(percent, 0, 1)
+percent = math.clamp(percent, 0, 1)
 			local value = cachedValue or math.floor(Data.Min + (Data.Max - Data.Min) * percent)
 	
-			if value ~= (string.split(SliderExample.ViewSlider.Value.Text, "/")[1] or Min) then
+if value ~= (string.split(SliderExample.ViewSlider.Value.Text, "/")[1] or Min) then
 				if not Data.WaitForMouse then
 					local called, message = pcall(Data.Callback, tonumber(value), Data, prevalue)
 					if not called then
@@ -1327,26 +1296,26 @@ do -- UI Functions
 				end
 			end
 			
-			SliderExample.ViewSlider.Value.Text = `{value}/{Data.Max}`
-			TS:Create(bar.ViewSlider.Button, TweenInfo.new(0.1), { Size = UDim2.new(percent, 0, 1, 0) }):Play()
+SliderExample.ViewSlider.Value.Text = `{value}/{Data.Max}`
+		TS:Create(bar.ViewSlider.Button, TweenInfo.new(0.1), { Size = UDim2.new(percent, 0, 1, 0) }):Play()
 			
-			Data.Value = value
+Data.Value = value
 			cachedValue = nil
 			
-		end))
+   end))
 		
-		HandleEvent(bar.MouseLeave:Connect(function()
+HandleEvent(bar.MouseLeave:Connect(function()
 			SliderDown = false
 		end))
 		
-		WrapFunction(function()
+WrapFunction(function()
 			while task.wait() do
 				if not UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then 
 					if MouseWasDown then
 						MouseWasDown = false
 						if Data.WaitForMouse then
 							
-							pcall(Data.Callback, tonumber(Data.Value), prevalue)
+pcall(Data.Callback, tonumber(Data.Value), prevalue)
 							prevalue = tonumber(Data.Value)
 						end
 					end
@@ -1356,17 +1325,17 @@ do -- UI Functions
 		--=====================================
 		local SliderTable = { Object = SliderExample.ViewSlider }
 	
-		function SliderTable:Set(value, nocall)
+function SliderTable:Set(value, nocall)
 			if not UIExist() then return; end
 			value = type(value)=="number" and value or Data.Value or Data.Min
 	
-			local percent = (value - Data.Min) / (Data.Max - Data.Min)
+  local percent = (value - Data.Min) / (Data.Max - Data.Min)
 			percent = math.clamp(percent, 0, 1)
 	
-			SliderExample.ViewSlider.Value.Text = `{value}/{Data.Max}`
+SliderExample.ViewSlider.Value.Text = `{value}/{Data.Max}`
 			TS:Create(bar.ViewSlider.Button, TweenInfo.new(0.1), { Size = UDim2.new(percent, 0, 1, 0) }):Play()
 			
-			if not nocall then
+if not nocall then
 				local called, message = pcall(Data.Callback, tonumber(value), prevalue)
 				if not called then
 					warn("[ Linui Library: Slider Bug ] "..Data.Name..": "..message)
@@ -1374,11 +1343,11 @@ do -- UI Functions
 			end
 		end
 	
-		function SliderTable:Get()
+function SliderTable:Get()
 			return Data.Value or Data.Min or 1
 		end
 	
-		function SliderTable:Text(value)
+function SliderTable:Text(value)
 			if not UIExist() then return; end
 			value = type(value)=="string" and value or nil
 			if value then
@@ -1386,31 +1355,31 @@ do -- UI Functions
 			end
 		end
 		
-		SliderTable:Set(Data.Value, Data.NoCall)
+SliderTable:Set(Data.Value, Data.NoCall)
 		return SliderTable
 	end	
 	
-	function Library:Label( Data: { Text: string, Tab: Frame } )
+ function Library:Label( Data: { Text: string, Tab: Frame } )
 		
-		Data = type(Data)=="table" and Data or {}
+Data = type(Data)=="table" and Data or {}
 		Data.Text = Data.Text or Data.Name or "Example"
 		Data.Tab = Data.Tab and (function() for i,v in next, Frame:GetDescendants() do if v.ClassName:find("Frame") and v.Name==Data.Tab then return v end end end)() or Frame:FindFirstChild("Right")
 	
-		local LabelExample = Examples:FindFirstChild('Label')
+local LabelExample = Examples:FindFirstChild('Label')
 		if not LabelExample then return; end
 		
-		LabelExample = LabelExample:Clone()
+LabelExample = LabelExample:Clone()
 		LabelExample.Label.Text = Data.Text
 		LabelExample.Parent = (Data.Tab:FindFirstChildOfClass("ScrollingFrame") and Data.Tab:FindFirstChildOfClass("ScrollingFrame"):FindFirstChildOfClass("ScrollingFrame") or Data.Tab:FindFirstChildOfClass("ScrollingFrame")) or Data.Tab
 		
-		local LabelTable = { Object = LabelExample.Label }
+local LabelTable = { Object = LabelExample.Label }
 		
-		function LabelTable:Get(value)
+function LabelTable:Get(value)
 			if not UIExist() then return ""; end
 			return LabelExample.Label.Text	
 		end
 		
-		function LabelTable:Text(value)
+function LabelTable:Text(value)
 			if not UIExist() then return; end
 			value = type(value)=="string" and value or nil
 			if value then
@@ -1418,27 +1387,27 @@ do -- UI Functions
 			end
 		end
 		
-		return LabelTable
+return LabelTable
 	end
 	
-	function Library:Button( Data: { Text: string, Tab: Frame, Callback: {} } )
+ function Library:Button( Data: { Text: string, Tab: Frame, Callback: {} } )
 	
-		Data = type(Data)=="table" and Data or {}
+Data = type(Data)=="table" and Data or {}
 		Data.Text = Data.Text or Data.Name or "Example"
 		Data.Tab = Data.Tab and (function() for i,v in next, Frame:GetDescendants() do if v.ClassName:find("Frame") and v.Name==Data.Tab then return v end end end)() or Frame:FindFirstChild("Right")
 		Data.Callback = type(Data.Callback)=="function" and Data.Callback or function() end
 	
-		local ButtonExample = Examples:FindFirstChild('Button')
+local ButtonExample = Examples:FindFirstChild('Button')
 		if not ButtonExample then return; end
 	
-		ButtonExample = ButtonExample:Clone()
+ButtonExample = ButtonExample:Clone()
 		ButtonExample.Label.Text = Data.Text
 		local event = HandleEvent(ButtonExample.MouseButton1Click:Connect(Data.Callback))
 		ButtonExample.Parent = (Data.Tab:FindFirstChildOfClass("ScrollingFrame") and Data.Tab:FindFirstChildOfClass("ScrollingFrame"):FindFirstChildOfClass("ScrollingFrame") or Data.Tab:FindFirstChildOfClass("ScrollingFrame")) or Data.Tab
 	
-		local ButtonTable = { Object = ButtonExample.Label }
+local ButtonTable = { Object = ButtonExample.Label }
 		
-		function ButtonTable:Callback()
+function ButtonTable:Callback()
 			if Data.Callback then
 				local suc, message = pcall(Data.Callback)
 				if not suc then
@@ -1447,7 +1416,7 @@ do -- UI Functions
 			end
 		end
 		
-		function ButtonTable:Change(callback)
+function ButtonTable:Change(callback)
 			if not UIExist() then return; end
 			callback = type(callback)=="function" and callback or nil
 			if callback then
@@ -1457,7 +1426,7 @@ do -- UI Functions
 			end
 		end
 		
-		function ButtonTable:Text(value)
+function ButtonTable:Text(value)
 			if not UIExist() then return; end
 			value = type(value)=="string" and value or nil
 			if value then
@@ -1465,30 +1434,30 @@ do -- UI Functions
 			end
 		end
 	
-		return ButtonTable
+return ButtonTable
 	end
 	
-	function Library:Toggle( Data: { Text: string, Tab: Frame, Value: boolean } )
+ function Library:Toggle( Data: { Text: string, Tab: Frame, Value: boolean } )
 		
-		Data = type(Data)=="table" and Data or {}
+Data = type(Data)=="table" and Data or {}
 		Data.Text = Data.Text or Data.Name or "Example"
 		Data.Tab = Data.Tab and (function() for i,v in next, Frame:GetDescendants() do if v.ClassName:find("Frame") and v.Name==Data.Tab then return v end end end)() or Frame:FindFirstChild("Right")
 		Data.Value = (type(Data.Value)=="boolean" or false) and Data.Value or false
 		Data.Callback = type(Data.Callback)=="function" and Data.Callback or function() end
 	
-		local ToggleExample = Examples:FindFirstChild('Toggle')
+local ToggleExample = Examples:FindFirstChild('Toggle')
 		if not ToggleExample then return; end
 		
-		local Tweening = false
+local Tweening = false
 		local State = Data.Value
 		
-		ToggleExample = ToggleExample:Clone()
+ToggleExample = ToggleExample:Clone()
 		ToggleExample.ViewToggle.Label.Text = Data.Text
 		ToggleExample.Parent = (Data.Tab:FindFirstChildOfClass("ScrollingFrame") and Data.Tab:FindFirstChildOfClass("ScrollingFrame"):FindFirstChildOfClass("ScrollingFrame") or Data.Tab:FindFirstChildOfClass("ScrollingFrame")) or Data.Tab
 		
-		local ToggleConfig = {
+local ToggleConfig = {
 			
-			["true"] = function()
+["true"] = function()
 				-- Position: {0, 0},{-0.02, 0}
 				-- Size: {0.475, 0},{1.014, 0}
 				-- ImageTransparency: 0.6
@@ -1496,7 +1465,7 @@ do -- UI Functions
 				if not UIExist() then return; end
 				Tweening = true
 	
-				if(pcall(function()return ToggleExample.ViewToggle.Button end)) then
+if(pcall(function()return ToggleExample.ViewToggle.Button end)) then
 					TS:Create(ToggleExample.ViewToggle.Button, TweenInfo.new(.2, Enum.EasingStyle.Sine), {
 						Position = UDim2.new(unpack{ 0, 0, -0.02, 0 }),
 						Size = UDim2.new(unpack{ 0.534, 0, 1.014, 0 }),
@@ -1504,14 +1473,14 @@ do -- UI Functions
 					}):Play()
 				end
 	
-				task.wait(.2)
+task.wait(.2)
 				State = not State
 				Tweening = false
 	
-				return State
+return State
 			end,
 			
-			["false"] = function()
+["false"] = function()
 				-- Position: {0.525, 0},{-0.02, 0}
 				-- Size: {0.475, 0},{1.014, 0}
 				-- ImageTransparency: .2
@@ -1519,24 +1488,24 @@ do -- UI Functions
 				if not UIExist() then return; end
 				Tweening = true
 				
-				if(pcall(function()return ToggleExample.ViewToggle.Button end)) then
-					TS:Create(ToggleExample.ViewToggle.Button, TweenInfo.new(.2, Enum.EasingStyle.Sine), {
+if(pcall(function()return ToggleExample.ViewToggle.Button end)) then
+				TS:Create(ToggleExample.ViewToggle.Button, TweenInfo.new(.2, Enum.EasingStyle.Sine), {
 						Position = UDim2.new(unpack{ 0.525, 0, -0.02, 0 }),
 						Size = UDim2.new(unpack{ 0.475, 0, 1.014, 0 }),
 						ImageTransparency = .2
 					}):Play()
 				end
 				
-				task.wait(.2)
+task.wait(.2)
 				State = not State
 				Tweening = false
 				
-				return State
+return State
 			end,
 			
-		}
+}
 		
-		ToggleConfig["nil"] = ToggleConfig["false"]
+ToggleConfig["nil"] = ToggleConfig["false"]
 		--------------
 		local ToggleHandler = (function(nocall)
 			local OldState = State
@@ -1548,7 +1517,7 @@ do -- UI Functions
 				end
 
 
-		    else -- False, toggling true
+  else -- False, toggling true
 			    local called, message = pcall(ToggleConfig["false"])
 				if not called then
 					State = not State
@@ -1556,7 +1525,7 @@ do -- UI Functions
 				end
 			end
 
-			if State ~= OldState and not nocall then
+if State ~= OldState and not nocall then
 				local called, message = pcall(Data.Callback, State, OldState)
 				if not called then
 					warn("[ Linui Library: Toggle Bug ] "..Data.Name..": "..message)
@@ -1564,27 +1533,27 @@ do -- UI Functions
 			end
 		end)
 		
-		State = not State
+  State = not State
 		ToggleHandler(true, Data.NoCall)
 		
-		if not UIExist() or not (pcall(function()return ToggleExample.ViewToggle.MouseButton1Click end)) then return; end
+if not UIExist() or not (pcall(function()return ToggleExample.ViewToggle.MouseButton1Click end)) then return; end
 		HandleEvent(ToggleExample.ViewToggle.MouseButton1Click, ToggleHandler)
 		HandleEvent(ToggleExample.ViewToggle.Button.MouseButton1Click, ToggleHandler)
 		--------------
 		local ToggleLibrary = { Object = ToggleExample.ViewToggle }
 		
-		function ToggleLibrary:Set(value)
+function ToggleLibrary:Set(value)
 			if type(value)=="boolean" then
 				ToggleHandler(not value)
 			end
 		end
 		
-		function ToggleLibrary:Get()
+function ToggleLibrary:Get()
 			repeat task.wait() until not Tweening -- Waits incase player toggles the toggle
 			return State
 		end
 		
-		function ToggleLibrary:Toggle()
+function ToggleLibrary:Toggle()
 			repeat task.wait() until not Tweening -- Waits incase player toggles the toggle
 			ToggleHandler(State)
 		end
@@ -1592,38 +1561,38 @@ do -- UI Functions
 		return ToggleLibrary
 	end
 	
-	function Library:Keybind( Data: { Text: string, Tab: Frame, Value: Enum | string } )
+ function Library:Keybind( Data: { Text: string, Tab: Frame, Value: Enum | string } )
 		
-		Data = type(Data)=="table" and Data or {}
+Data = type(Data)=="table" and Data or {}
 		Data.Text = Data.Text or Data.Name or "Test Keybind"
 		Data.Tab = Data.Tab and (function() for i,v in next, Frame:GetDescendants() do if v.ClassName:find("Frame") and v.Name==Data.Tab then return v end end end)() or Frame:FindFirstChild("Right")
 		Data.Value = (typeof(Data.Value)=="Enum" and Data.Value.Name) or (typeof(Data.Value)=="string" and Data.Value) or nil
 		Data.Value = type(Data.Value)=="string" and Data.Value or "K"
 		
-		Data.OnChange = type(Data.OnChange)=="function" and Data.OnChange or function() end
+Data.OnChange = type(Data.OnChange)=="function" and Data.OnChange or function() end
 		Data.Callback = type(Data.Callback)=="function" and Data.Callback or function() end
 		
-		local KeybindExample = Examples:FindFirstChild('Keybind')
+local KeybindExample = Examples:FindFirstChild('Keybind')
 		if not KeybindExample then return; end
 		
-		local WaitingForKey = false
+local WaitingForKey = false
 		local KeyCooldown = false
 		
-		local CurrentKey = Data.Value
+local CurrentKey = Data.Value
 		local LoopExist = false
 	
-		KeybindExample = KeybindExample:Clone()
+KeybindExample = KeybindExample:Clone()
 		KeybindExample.ViewKeybind.Label.Text = Data.Text
 		KeybindExample.ViewKeybind.Button.Text = Data.Value
 		KeybindExample.Parent = (Data.Tab:FindFirstChildOfClass("ScrollingFrame") and Data.Tab:FindFirstChildOfClass("ScrollingFrame"):FindFirstChildOfClass("ScrollingFrame") or Data.Tab:FindFirstChildOfClass("ScrollingFrame")) or Data.Tab
 
 
-		HandleEvent(UIS.InputBegan:Connect(function(keycode, chat)
+HandleEvent(UIS.InputBegan:Connect(function(keycode, chat)
 			if chat or KeyCooldown then return; end
 			KeyCooldown = true
 			-------------------------------------
 	
-			local keyname = (keycode["KeyCode"]["Name"] or ""):lower();
+local keyname = (keycode["KeyCode"]["Name"] or ""):lower();
 			local real_keyname = (keycode["KeyCode"]["Name"] or "")
 			if keyname=="unknown" then
 				for i,v in next, Enum.UserInputType:GetEnumItems() do
@@ -1634,7 +1603,7 @@ do -- UI Functions
 				end
 			end
 			
-			if keyname=="unknown" then
+if keyname=="unknown" then
 				KeyCooldown = false
 				return;
 			end
@@ -1642,13 +1611,13 @@ do -- UI Functions
 			local upper = {}
 			local KBName = ""
 			
-			local generate = function(...)
+local generate = function(...)
 				for i , v in next, {...} do
 					KBName ..= tostring(v)
 				end
 			end
 			
-			for i = 1, #real_keyname do
+for i = 1, #real_keyname do
 				local key = string.sub(real_keyname, i, i)
 				if key == key:upper() then
 					upper[#upper+1] = key
@@ -1663,27 +1632,27 @@ do -- UI Functions
 			if not UIExist() then return; end
 			if WaitingForKey then			
 				
-				if keyname:find("movement") or keyname:find("space") then return end -- Disgard any movement functions
+if keyname:find("movement") or keyname:find("space") then return end -- Disgard any movement functions
 	
-				KeybindExample.ViewKeybind.Button.Text = KBName
+KeybindExample.ViewKeybind.Button.Text = KBName
 				local oldCurrentKey = CurrentKey
 
-				CurrentKey = KBName
+CurrentKey = KBName
 				WaitingForKey = false
 				KeyCooldown = false
 				LoopExist = false
 	
-				local called, message = pcall(Data.OnChange, real_keyname, (oldCurrentKey or KBName), KBName)
+local called, message = pcall(Data.OnChange, real_keyname, (oldCurrentKey or KBName), KBName)
 				if not called then
 					warn("[ Linui Library: Keybind 'OnChange' Bug ] "..Data.Name..": "..message)
 				end
 			else
 				
-				KeybindExample.ViewKeybind.Button.Text = CurrentKey
+KeybindExample.ViewKeybind.Button.Text = CurrentKey
 				CurrentKey = CurrentKey
 				KeyCooldown = false
 	
-				if KBName == CurrentKey then
+if KBName == CurrentKey then
 					local called, message = pcall(Data.Callback, real_keyname, KBName)
 					if not called then
 						warn("[ Linui Library: Keybind Bug ] "..Data.Name..": "..message)
@@ -1691,22 +1660,22 @@ do -- UI Functions
 				end
 			end		
 			
-		end))
+end))
 		
-		HandleEvent(KeybindExample.ViewKeybind.Button.MouseButton1Click:Connect(function()
+   HandleEvent(KeybindExample.ViewKeybind.Button.MouseButton1Click:Connect(function()
 	
-			WaitingForKey = not WaitingForKey
-			if WaitingForKey and not LoopExist then
+  WaitingForKey = not WaitingForKey
+		if WaitingForKey and not LoopExist then
 				
-				local start = ""
+local start = ""
 				LoopExist = true
 				
-				local currentTime = tick()
+local currentTime = tick()
 				KeybindExample.ViewKeybind.Button.Text = "."
 				
-				while task.wait() and Frame and LoopExist and UIExist() do
+while task.wait() and Frame and LoopExist and UIExist() do
 					
-					if #start >= 3 then start = "." else start ..= "." end
+if #start >= 3 then start = "." else start ..= "." end
 					if (tick() - currentTime) >= .2 then
 						WaitingForKey = true
 						currentTime = tick()
@@ -1715,144 +1684,144 @@ do -- UI Functions
 					end
 				end
 				
-				WaitingForKey = false
+WaitingForKey = false
 				LoopExist = false
 			end
 			
-		end))
+   end))
 		
-		local KeybindLib = { Object = KeybindExample.ViewKeybind }
+local KeybindLib = { Object = KeybindExample.ViewKeybind }
 		return KeybindLib
 	end
 	
-	function Library:Dropdown( Data: { Text: string, Tab: Frame, Data: {} } ) 
+ function Library:Dropdown( Data: { Text: string, Tab: Frame, Data: {} } ) 
 
-		Data = type(Data)=="table" and Data or {}
+Data = type(Data)=="table" and Data or {}
 		Data.Text = Data.Text or Data.Name or "Test Dropdown"
 		Data.Data = type(Data.Data)=="table" and Data.Data or {}
 		Data.Tab = Data.Tab and (function() for i,v in next, Frame:GetDescendants() do if v.ClassName:find("Frame") and v.Name==Data.Tab then return v end end end)() or Frame:FindFirstChild("Right")
 		Data.Callback = Data.Callback or function() end
 
-		local DropdownExample = Examples:FindFirstChild("Dropdown")
-		if not DropdownExample then return; end
+ local DropdownExample = Examples:FindFirstChild("Dropdown")
+	if not DropdownExample then return; end
 
-		DropdownExample = DropdownExample:Clone()
+DropdownExample = DropdownExample:Clone()
 		DropdownExample.Parent = (Data.Tab:FindFirstChildOfClass("ScrollingFrame") and Data.Tab:FindFirstChildOfClass("ScrollingFrame"):FindFirstChildOfClass("ScrollingFrame") or Data.Tab:FindFirstChildOfClass("ScrollingFrame")) or Data.Tab
 		
-		local Dropdown = DropdownExample.ViewDropdown
+local Dropdown = DropdownExample.ViewDropdown
 		Dropdown.Label.Text = Data.Text
 
-		local Frame = Dropdown.Frame
+local Frame = Dropdown.Frame
 		local ExampleButton = Frame.Button:Clone()
 		local Symbol = Dropdown.Symbol
 		local parentFrame = Dropdown.Parent
 		
-		local Toggled, Cooldown = false, false
+local Toggled, Cooldown = false, false
 		local parentFrame_Size = parentFrame.Size
 		local addSize = 26
 		local dropdownLib = { Object = Dropdown, Data = {} }
 		
-		HandleEvent(Dropdown.MouseButton1Click:Connect(function()
+HandleEvent(Dropdown.MouseButton1Click:Connect(function()
 	
-			if Cooldown then return; end
-			Cooldown = true
+if Cooldown then return; end
+		Cooldown = true
 			if Toggled then		
 
-				Symbol.Text = "<"
-				local ObjInFrame = 0
+Symbol.Text = "<"
+			local ObjInFrame = 0
 
-				for _, child: Frame in next, Frame:GetChildren() do
+for _, child: Frame in next, Frame:GetChildren() do
 					if (pcall(function() return child.Name, child.Position, child.Size, child.BackgroundColor3 end)) then
 						TS:Create(child, TweenInfo.new(.5), { TextTransparency = 1, Size = UDim2.fromOffset(child.Size.X.Offset, 0) }):Play()
 						ObjInFrame += 1
 					end
 				end
 
-				pcall(function()
+ pcall(function()
 					Frame:TweenSize(UDim2.fromOffset(Frame.Size.X.Offset, 0), nil, nil, .5)
 					parentFrame:TweenSize(parentFrame_Size, nil, nil, .5)
 				end)
 				
-				task.wait(.5)
+task.wait(.5)
 				Frame.Visible = false
 			else
 				
-				local ObjInFrame = 0
+local ObjInFrame = 0
 				Frame.Visible = true
 				
-				for _, child: Frame in next, Frame:GetChildren() do
+for _, child: Frame in next, Frame:GetChildren() do
 					if (pcall(function() return child.Name, child.Position, child.Size, child.BackgroundColor3 end)) then
 						TS:Create(child, TweenInfo.new(.5), { TextTransparency = 0, Size = UDim2.fromOffset(child.Size.X.Offset, ExampleButton.Size.Y.Offset) }):Play()
 						ObjInFrame += 1
 					end
 				end
 				
-				Symbol.Text = ">"
+Symbol.Text = ">"
 				Frame:TweenSize(UDim2.fromOffset(Frame.Size.X.Offset, addSize * ObjInFrame), nil, nil, .5)
 				parentFrame:TweenSize(UDim2.fromOffset(parentFrame_Size.X.Offset, parentFrame_Size.Y.Offset + (addSize * ObjInFrame)), nil, nil, .5)
 				task.wait(.5)
 				
-			end
+end
 			
-			Cooldown = false
+Cooldown = false
 			Toggled = not Toggled
 		end))
 		
-		HandleEvent(Frame.ChildAdded:Connect(function(child)
+HandleEvent(Frame.ChildAdded:Connect(function(child)
 			if (pcall(function() return child.Name, child.Position, child.Size, child.BackgroundColor3 end)) then
 				Frame.Size = UDim2.fromOffset(Frame.Size.X.Offset, Frame.Size.Y.Offset + addSize)
 				dropdownLib.Data[child.Name] = child
 
-				if Toggled then
+if Toggled then
 
-					local ObjInFrame = 0
+local ObjInFrame = 0
 					Frame.Visible = true
 					
-					for _, child in next, Frame:GetChildren() do
+for _, child in next, Frame:GetChildren() do
 						if (pcall(function() return child.Name, child.Position, child.Size, child.BackgroundColor3 end)) then
 							ObjInFrame += 1
 						end
 					end
 
-					pcall(function()
+pcall(function()
 						parentFrame:TweenSize(UDim2.fromOffset(parentFrame_Size.X.Offset, parentFrame_Size.Y.Offset + (addSize * ObjInFrame)), nil, nil, .5)
 					end)
 
-				end
+end
 			end
 		end))
-		
-		HandleEvent(Frame.ChildRemoved:Connect(function(child)
+	
+HandleEvent(Frame.ChildRemoved:Connect(function(child)
 			if (pcall(function() return child.Name, child.Position, child.Size, child.BackgroundColor3 end)) then
 				Frame.Size = UDim2.fromOffset(Frame.Size.X.Offset, Frame.Size.Y.Offset - addSize)
 				dropdownLib.Data[child.Name] = nil
 
-				if Toggled then
+if Toggled then
 
-					local ObjInFrame = 0
+local ObjInFrame = 0
 					Frame.Visible = true
 					
-					for _, child in next, Frame:GetChildren() do
+for _, child in next, Frame:GetChildren() do
 						if (pcall(function() return child.Name, child.Position, child.Size, child.BackgroundColor3 end)) then
 							ObjInFrame += 1
 						end
 					end
 
-					pcall(function()
+pcall(function()
 						parentFrame:TweenSize(UDim2.fromOffset(parentFrame_Size.X.Offset, parentFrame_Size.Y.Offset + (addSize * ObjInFrame)), nil, nil, .5)
 					end)
 					
-				end
+end
 			end
 		end))
 		
-		Symbol.Text = "<"
+Symbol.Text = "<"
 		Frame.Visible = false
 		Frame.Size = UDim2.fromOffset(Frame.Size.X.Offset, 0)
 
-		local Selected = nil
+local Selected = nil
 
-		function dropdownLib:Remove( value )
+function dropdownLib:Remove( value )
 			for i, child in next, Frame:GetChildren() do
 				if (pcall(function() return child.Name, child.Position, child.Size, child.BackgroundColor3 end)) then
 					if not value then
@@ -1867,42 +1836,42 @@ do -- UI Functions
 			dropdownLib:Refresh()
 		end
 		
-		function dropdownLib:Delete(...)
+function dropdownLib:Delete(...)
 			return dropdownLib:Remove(...)
 		end
 
-		function dropdownLib:Add( value: string )
+function dropdownLib:Add( value: string )
 			if type(value)=="string" then
 
-				local btn: TextButton = ExampleButton:Clone()
+local btn: TextButton = ExampleButton:Clone()
 				btn.Text = value
 				btn.Name = value
 				btn.Parent = Frame
 				
-				HandleEvent(btn.MouseButton1Click, function()
+HandleEvent(btn.MouseButton1Click, function()
 
-					btn.TextColor3 = Color3.fromRGB()
+btn.TextColor3 = Color3.fromRGB()
 					local oldSelName = Selected and Selected.Name or ""
 					
-					if oldSelName~="" then
+if oldSelName~="" then
 						local Stroke: UIStroke = Selected:FindFirstChildOfClass("UIStroke")
 						if Stroke then Stroke:Destroy() end
 						Selected.TextColor3 = Color3.fromRGB(17, 117, 167)
 					end
 
-					local UIStroke = Instance.new("UIStroke")
+local UIStroke = Instance.new("UIStroke")
 					UIStroke["Color"] = Color3.fromRGB(255, 255, 255)
 					UIStroke["Thickness"] = 0.20000000298023224
 					UIStroke["Parent"] = btn
 
-					btn.TextColor3 = Color3.fromRGB(26, 177, 252)
+btn.TextColor3 = Color3.fromRGB(26, 177, 252)
 					Selected = btn
 
-					if not Data.KeepText then
+if not Data.KeepText then
 						pcall(function() Dropdown.Label.Text = value end) -- IDK, ITS 4 AM
 					end
 
-					local passed, message = pcall(Data.Callback, value, oldSelName)
+local passed, message = pcall(Data.Callback, value, oldSelName)
 					if not passed then
 						warn("[ Linui Library: Dropdown Bug ] "..Data.Name..": "..message)
 					end
@@ -1912,7 +1881,7 @@ do -- UI Functions
 			end
 		end
 
-		function dropdownLib:Get( value: string ) 
+function dropdownLib:Get( value: string ) 
 			for i, child in next, Frame:GetChildren() do
 				if (pcall(function() return child.Name, child.Position, child.Size, child.BackgroundColor3 end)) then
 					if not value then
@@ -1927,14 +1896,14 @@ do -- UI Functions
 			return nil
 		end
 
-		function dropdownLib:All()
+function dropdownLib:All()
 			return dropdownLib.Data
 		end
 
-		function dropdownLib:Refresh(data: {})
+function dropdownLib:Refresh(data: {})
 
-			task.spawn(function()
-				if type(data)=="table" then
+ task.spawn(function()
+		if type(data)=="table" then
 					dropdownLib:Remove()
 					for i,v in next, data do
 						dropdownLib:Add(v)
@@ -1945,94 +1914,94 @@ do -- UI Functions
 				repeat task.wait() until not Cooldown
 				Cooldown = true
 	
-				if not Toggled then		
+if not Toggled then		
 					Symbol.Text = "<"
 
-					pcall(function()
+pcall(function()
 						Frame:TweenSize(UDim2.fromOffset(Frame.Size.X.Offset, 0), nil, nil, .5)
 						parentFrame:TweenSize(parentFrame_Size, nil, nil, .5)
 					end)
 					
-					task.wait(.5)
+task.wait(.5)
 					Frame.Visible = false
 				else
 					
-					local ObjInFrame = 0
+local ObjInFrame = 0
 					Frame.Visible = true
 					
-					for _, child in next, Frame:GetChildren() do
+for _, child in next, Frame:GetChildren() do
 						if (pcall(function() return child.Name, child.Position, child.Size, child.BackgroundColor3 end)) then
 							ObjInFrame += 1
 						end
 					end
 					
-					Symbol.Text = ">"
+Symbol.Text = ">"
 					pcall(function()
 						Frame:TweenSize(UDim2.fromOffset(Frame.Size.X.Offset, addSize * ObjInFrame), nil, nil, .5)
 						parentFrame:TweenSize(UDim2.fromOffset(parentFrame_Size.X.Offset, parentFrame_Size.Y.Offset + (addSize * ObjInFrame)), nil, nil, .5)
 					end)
 					task.wait(.5)
 					
-				end
+end
 				Cooldown = false
 			end)
 		end
 
-		dropdownLib:Refresh(Data.Data)
+dropdownLib:Refresh(Data.Data)
 
-		if Frame:FindFirstChild("Button") then
+if Frame:FindFirstChild("Button") then
 			Frame.Button:Destroy()
 		end
 
-		return dropdownLib
+return dropdownLib
 	end
 
-	function Library:Color( Data: { Text: string, Tab: Frame, Data: {} } ) 
+function Library:Color( Data: { Text: string, Tab: Frame, Data: {} } ) 
 
-		Data = type(Data)=="table" and Data or {}
+ Data = type(Data)=="table" and Data or {}
 		Data.Text = Data.Text or Data.Name or "Test Color"
 		Data.Data = type(Data.Data)=="table" and Data.Data or {}
 		Data.Tab = Data.Tab and (function() for i,v in next, Frame:GetDescendants() do if v.ClassName:find("Frame") and v.Name==Data.Tab then return v end end end)() or Frame:FindFirstChild("Right")
 		Data.Callback = Data.Callback or function() end
 
-		local ColorExample = Examples:FindFirstChild("ColorPicker")
+local ColorExample = Examples:FindFirstChild("ColorPicker")
 		if not ColorExample then return; end
-
-		ColorExample = ColorExample:Clone()
+  
+ColorExample = ColorExample:Clone()
 		ColorExample.Parent = (Data.Tab:FindFirstChildOfClass("ScrollingFrame") and Data.Tab:FindFirstChildOfClass("ScrollingFrame"):FindFirstChildOfClass("ScrollingFrame") or Data.Tab:FindFirstChildOfClass("ScrollingFrame")) or Data.Tab
-		
-		local ViewColor = ColorExample:FindFirstChild("ViewColor")
+	
+local ViewColor = ColorExample:FindFirstChild("ViewColor")
 		ViewColor.Label.Text = Data.Text
 
-		local frame = ViewColor:FindFirstChild("Frame")
+local frame = ViewColor:FindFirstChild("Frame")
 		local colorpicker = frame.Parent.Parent
 		
-		local colourWheel: ImageButton = frame:WaitForChild("ColourWheel")
+local colourWheel: ImageButton = frame:WaitForChild("ColourWheel")
 		local wheelPicker: ImageButton = colourWheel:WaitForChild("Picker")
 		
-		local darknessPicker = frame:WaitForChild("DarknessPicker")
+local darknessPicker = frame:WaitForChild("DarknessPicker")
 		local darknessSlider: ImageButton = darknessPicker:WaitForChild("Slider")
 		
-		local colourDisplay = ViewColor:WaitForChild("ColorDisplay")
+local colourDisplay = ViewColor:WaitForChild("ColorDisplay")
 		local UIS = game:GetService("UserInputService")
 		local TS = game:GetService("TweenService")
 		
-		local R, G, B = frame:FindFirstChild("R"), frame:FindFirstChild("G"), frame:FindFirstChild("B")
+local R, G, B = frame:FindFirstChild("R"), frame:FindFirstChild("G"), frame:FindFirstChild("B")
 		local buttonDown = false
 		local movingSlider = false
 		local colorlib = {}
 
-		local function updateMouse(mousePos)
+local function updateMouse(mousePos)
 	
-			local centreOfWheel = Vector2.new(colourWheel.AbsolutePosition.X + (colourWheel.AbsoluteSize.X/2), colourWheel.AbsolutePosition.Y + (colourWheel.AbsoluteSize.Y/2))
-			local distanceFromWheel = (mousePos - centreOfWheel).Magnitude
+local centreOfWheel = Vector2.new(colourWheel.AbsolutePosition.X + (colourWheel.AbsoluteSize.X/2), colourWheel.AbsolutePosition.Y + (colourWheel.AbsoluteSize.Y/2))
+local distanceFromWheel = (mousePos - centreOfWheel).Magnitude
 		
 		
-			if distanceFromWheel <= colourWheel.AbsoluteSize.X/2 then
+if distanceFromWheel <= colourWheel.AbsoluteSize.X/2 then
 				wheelPicker:TweenPosition(UDim2.new(0, mousePos.X - colourWheel.AbsolutePosition.X, 0, mousePos.Y - colourWheel.AbsolutePosition.Y), nil, nil, .05)
 			end
 			
-			if movingSlider then
+if movingSlider then
 				darknessSlider:TweenPosition(UDim2.new(darknessSlider.Position.X.Scale, 0, 0, 
 					math.clamp(
 						mousePos.Y - darknessPicker.AbsolutePosition.Y, 
@@ -2041,47 +2010,47 @@ do -- UI Functions
 					)	, nil, nil, .05)
 			end
 			
-			return centreOfWheel
+return centreOfWheel
 		end
 		
-		local function updateColour(centreOfWheel)
+  local function updateColour(centreOfWheel)
 		
-			local colourPickerCentre = Vector2.new(
+local colourPickerCentre = Vector2.new(
 				colourWheel.Picker.AbsolutePosition.X + (colourWheel.Picker.AbsoluteSize.X/2),
 				colourWheel.Picker.AbsolutePosition.Y + (colourWheel.Picker.AbsoluteSize.Y/2)
 			)
 			
-			local h = (math.pi - math.atan2(colourPickerCentre.Y - centreOfWheel.Y, colourPickerCentre.X - centreOfWheel.X)) / (math.pi * 2)
+local h = (math.pi - math.atan2(colourPickerCentre.Y - centreOfWheel.Y, colourPickerCentre.X - centreOfWheel.X)) / (math.pi * 2)
 			local s = (centreOfWheel - colourPickerCentre).Magnitude / (colourWheel.AbsoluteSize.X/2)
 			local v = math.abs((darknessSlider.AbsolutePosition.Y - darknessPicker.AbsolutePosition.Y) / darknessPicker.AbsoluteSize.Y - 1)
 			local hsv = Color3.fromHSV(math.clamp(h, 0, 1), math.clamp(s, 0, 1), math.clamp(v, 0, 1))
 			
-			TS:Create(colourDisplay, TweenInfo.new( movingSlider and .05 or .1 ), { 
+TS:Create(colourDisplay, TweenInfo.new( movingSlider and .05 or .1 ), { 
 				BackgroundColor3 = hsv
 			}):Play()
 			
-			darknessPicker.UIGradient.Color = ColorSequence.new{
+darknessPicker.UIGradient.Color = ColorSequence.new{
 				ColorSequenceKeypoint.new(0, hsv), 
 				ColorSequenceKeypoint.new(1, Color3.new(0, 0, 0))
 			}
-			
-			TS:Create(darknessSlider, TweenInfo.new( movingSlider and .05 or .1 ), { 
+		
+TS:Create(darknessSlider, TweenInfo.new( movingSlider and .05 or .1 ), { 
 				ImageColor3 = hsv
 			}):Play()
 			
-			colorlib:Set(hsv)
+colorlib:Set(hsv)
 			
-		end	
-		
-		local ShowCooldown = false
+end	
+	
+local ShowCooldown = false
 		local originalSize = frame.Size
 		local _originalSize = ColorExample.Size
 
-		HandleEvent(ViewColor.MouseButton1Click:Connect(function()
+HandleEvent(ViewColor.MouseButton1Click:Connect(function()
 			if ShowCooldown then return; end
 			ShowCooldown = true
 
-			if not frame.Visible then
+if not frame.Visible then
 				frame.Size = UDim2.fromOffset(frame.Size.X.Offset, 0)
 				ColorExample.Size = frame.Size
 				frame.Visible = true
@@ -2098,10 +2067,10 @@ do -- UI Functions
 				frame.Visible = false
 			end
 
-			ShowCooldown = false
+ShowCooldown = false
 		end))
 
-		HandleEvent(colourWheel.MouseMoved:Connect(function(x, y)
+HandleEvent(colourWheel.MouseMoved:Connect(function(x, y)
 			local mouse_position = Vector2.new(x, y)
 			if UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
 				buttonDown = true
@@ -2110,8 +2079,8 @@ do -- UI Functions
 				buttonDown = false
 			end
 		end))
-
-		HandleEvent(darknessPicker.MouseMoved:Connect(function(x, y)
+  
+HandleEvent(darknessPicker.MouseMoved:Connect(function(x, y)
 			local mouse_position = Vector2.new(x, y)
 			if UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
 				movingSlider = true
@@ -2121,22 +2090,22 @@ do -- UI Functions
 			end
 		end))
 
-		----------------------------------------
-		function colorlib:Set( color: Color3, nocall: boolean )
+----------------------------------------
+function colorlib:Set( color: Color3, nocall: boolean )
 			if typeof(color)=="Color3" then
 
-				TS:Create(colourDisplay, TweenInfo.new( movingSlider and .05 or .1 ), { 
+TS:Create(colourDisplay, TweenInfo.new( movingSlider and .05 or .1 ), { 
 					BackgroundColor3 = color
 				}):Play()
 
-				local _R, _G, _B = color.R * 255, color.G * 255, color.B * 255 -- I love complicating my code [ Im joking I did this for fun ]
+local _R, _G, _B = color.R * 255, color.G * 255, color.B * 255 -- I love complicating my code [ Im joking I did this for fun ]
 				_R, _G, _B = tostring(_R):split(".")[1], tostring(_G):split(".")[1], tostring(_B):split(".")[1]
 	
-				if typeof(R)=="Instance" and R.ClassName:match("Text") then R.Text = _R end
+if typeof(R)=="Instance" and R.ClassName:match("Text") then R.Text = _R end
 				if typeof(G)=="Instance" and G.ClassName:match("Text") then G.Text = _G end
 				if typeof(B)=="Instance" and B.ClassName:match("Text") then B.Text = _B end
 
-				if not nocall then
+if not nocall then
 					local called, message = pcall(Data.Callback, color)
 					if not called then
 						warn("[ Linui Library: ColorPicker Bug ] "..Data.Name..": "..message)
@@ -2144,55 +2113,55 @@ do -- UI Functions
 				end
 			end
 		end
-
-		function colorlib:Text( value: string )
+  
+function colorlib:Text( value: string )
 			if type(value)=="string" then
 				ViewColor.Label.Text = value
 			end
 		end
 
-		function colorlib:Get()
+function colorlib:Get()
 			repeat task.wait(.06) until not buttonDown -- If they're picking a color, wait for them to be finished
 			return colourDisplay.BackgroundColor3
 		end
 
-		if Data.Color then
+if Data.Color then
 			colorlib:Set(Data.Color, Data.nocall)
 		end
 
-		frame.Visible = Data.Hide
+frame.Visible = Data.Hide
 		return colorlib
 	end
-
-	function Library:Section(name) 
+ 
+function Library:Section(name) 
 		
-		name = type(name)=="string" and name or "ExmapleSection"
+name = type(name)=="string" and name or "ExmapleSection"
 		local sectionLib = {}
 		local HideCooldown = false
 		
-		local Section = Instance.new("Frame")
+local Section = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
 		local _Frame = Instance.new("ScrollingFrame")
 	
-		local Label = Instance.new("TextButton")
+local Label = Instance.new("TextButton")
 		local Line = Instance.new("Frame")
 		
-		local UIListLayout = Instance.new("UIListLayout")
+local UIListLayout = Instance.new("UIListLayout")
 		local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
 	
-		--Properties:
+	--Properties:
 	
-		Section.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+Section.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
 		Section.BackgroundTransparency = 0.400
 		Section.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Section.BorderSizePixel = 0
 		Section.Position = UDim2.new(-4.31409859e-08, 0, -1.04034665e-08, 0)
 		Section.Size = UDim2.new(1.00000012, 0, 0.259604543, 0)
 	
-		UICorner.CornerRadius = UDim.new(0, 0)
+UICorner.CornerRadius = UDim.new(0, 0)
 		UICorner.Parent = Section
 	
-		_Frame.Name = "_Frame"
+_Frame.Name = "_Frame"
 		_Frame.Parent = Section
 		_Frame.Active = true
 		_Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -2203,7 +2172,7 @@ do -- UI Functions
 		_Frame.Size = UDim2.new(0.961277604, 0, 0.884780228, 0)
 		_Frame.ScrollBarThickness = 1
 	
-		Label.Name = "Label"
+Label.Name = "Label"
 		Label.Parent = Section
 		Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		Label.BackgroundTransparency = 1.000
@@ -2217,42 +2186,42 @@ do -- UI Functions
 		Label.TextSize = 15.000
 		Label.TextWrapped = true
 	
-		UITextSizeConstraint.Parent = Label
+UITextSizeConstraint.Parent = Label
 		UITextSizeConstraint.MaxTextSize = 14
 		
-		UIListLayout.Padding = UDim.new(0, 1)
+UIListLayout.Padding = UDim.new(0, 1)
 		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 		UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 		UIListLayout.Parent = _Frame
 		
-		Line.Name = "Line"
+Line.Name = "Line"
 		Line.Parent = Section
 		Line.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 		Line.BorderColor3 = Color3.fromRGB(255, 255, 255)
 		Line.Position = UDim2.new(0.353349507, 0, 0.0730726197, 0)
 		Line.Size = UDim2.new(0.292164683, 0, 0.00135501358, 0)
 		
-		local LeftSide = Frame:FindFirstChild("Left") or Frame:FindFirstChild("Right")
+local LeftSide = Frame:FindFirstChild("Left") or Frame:FindFirstChild("Right")
 		LeftSide = LeftSide and LeftSide:FindFirstChildOfClass("ScrollingFrame") or LeftSide
 		if not LeftSide then Section:Destroy(); return "Frame Componets not found!" end
 		
-		Section.Name = name
+Section.Name = name
 		Section.Parent = LeftSide
 		handleChildSize(_Frame, _Frame)
 
-		function sectionLib:Slider(Data)
+function sectionLib:Slider(Data)
 			Data = type(Data)=="table" and Data or {}
 			Data.Tab = name
 			return Library:Slider(Data)
 		end
 		
-		function sectionLib:Label(Data)
+function sectionLib:Label(Data)
 			Data = type(Data)=="table" and Data or {}
 			Data.Tab = name
 			return Library:Label(Data)
 		end
 		
-		function sectionLib:Button(Data)
+function sectionLib:Button(Data)
 			Data = type(Data)=="table" and Data or {}
 			Data.Tab = name
 			return Library:Button(Data)
@@ -2281,14 +2250,14 @@ do -- UI Functions
 			Section.Parent = nil
 		end
 		
-		function sectionLib:Show()
+function sectionLib:Show()
 			Section.Parent = LeftSide
 		end
 
-		return sectionLib
-	end
+return sectionLib
+  end
 
-	Loop(function()
+Loop(function()
 		local exist = pcall(function() return Part.Name, Part.Parent~=nil and Part or error(), Part.Size end)
 		if not exist then _UIExist = false end
 		_UIExist = tick()
@@ -2305,15 +2274,15 @@ local PartIncreased = false
 Cache.add(game:GetService("RunService").RenderStepped:Connect(function(deltaTime)
 	local mouse = game:GetService("Players").LocalPlayer:GetMouse()
 
-	local sizeX = mouse.ViewSizeX
+local sizeX = mouse.ViewSizeX
 	local sizeY = mouse.ViewSizeY
 
-	local mouseX = (mouse.X-mouse.ViewSizeX/2) * SCALE
+local mouseX = (mouse.X-mouse.ViewSizeX/2) * SCALE
 	local mouseY = (mouse.Y-mouse.ViewSizeY/2) * SCALE
 	
-	TS:Create(Part, TweenInfo.new(deltaTime), { CFrame =  workspace.CurrentCamera.CFrame * CFrame.new(LookView.X, LookView.Y, LookView.Z) * CFrame.Angles(0, math.rad(mouseX), 0) * CFrame.Angles(math.rad(mouseY) , 0 , 0) }):Play()
+TS:Create(Part, TweenInfo.new(deltaTime), { CFrame =  workspace.CurrentCamera.CFrame * CFrame.new(LookView.X, LookView.Y, LookView.Z) * CFrame.Angles(0, math.rad(mouseX), 0) * CFrame.Angles(math.rad(mouseY) , 0 , 0) }):Play()
 	
-	task.wait(deltaTime)
+task.wait(deltaTime)
 	local scalingFactor = (workspace.CurrentCamera.CFrame.Position - Part.CFrame.Position).Magnitude - LookView.Z	
 	--Part.Size = Part.Size / Vector3.new(scalingFactor, 0, scalingFactor)
 
@@ -2329,44 +2298,44 @@ do -- PlayerName
 		local Label = PlayerName
 		local Text = Label:GetAttribute("Text") or Label.Text
 
-		local typeDelay = 0.1
+local typeDelay = 0.1
 		local Length = 5
 		local EffectApplying = false
+  
+local function TextRainbow()
 
-		local function TextRainbow()
-
-			if EffectApplying then return; end
+if EffectApplying then return; end
 			EffectApplying = true
 
-			Text = Label:GetAttribute("Text") or Text
+Text = Label:GetAttribute("Text") or Text
 			Label.Text = ""
 
-			if #Text > 0 then
+if #Text > 0 then
 				for i = 1, #Text do
 
-					local hue = tick() % Length / Length
+local hue = tick() % Length / Length
 					local color = Color3.fromHSV(hue, 1, 1)
 					local r,g,b = math.floor((color.R*255) + 0.5), math.floor((color.G*255) + 0.5), math.floor((color.B*255) + 0.5)
 
-					local text = string.sub(Text, i, i)
+local text = string.sub(Text, i, i)
 					Label.Text ..= `<font color="rgb({r}, {g}, {b})">{text}</font>`
 					task.wait(typeDelay)
 
-				end
+end
 			end
 
-			task.wait(1)
+task.wait(1)
 			EffectApplying = false
 
-		end
-		--===========================================
+end
+	--===========================================
 		local HoverHandler = Label:WaitForChild("HoverHandler")
 
-		HoverHandler.MouseEnter:Connect(function()
+HoverHandler.MouseEnter:Connect(function()
 			Label:SetAttribute("Hover", true)
 		end)
 
-		HoverHandler.MouseLeave:Connect(function()
+HoverHandler.MouseLeave:Connect(function()
 			Label:SetAttribute("Hover", false)
 		end)
 		--===========================================
@@ -2396,11 +2365,11 @@ Cache.add(UIS.InputBegan:Connect(function(keycode, chat)
 	Config.Keys[keyname] = tick()
 	if keyname == "mousebutton1" then
 		
-		local InFrame = true
+local InFrame = true
 		local Time = .5
 		AllFrames = Frame:GetChildren()
 		
-		for i,v in next, AllFrames do
+   for i,v in next, AllFrames do
 			if v:IsA("Frame") or v:IsA("ImageLabel") or v:IsA("ImageButton") or v:IsA("ScrollingFrame") then
 				if not Mouse:MouseInFrame(v) then
 					InFrame = false
@@ -2408,15 +2377,15 @@ Cache.add(UIS.InputBegan:Connect(function(keycode, chat)
 			end
 		end
 		
-		if not InFrame then
+if not InFrame then
 			
-			if Config["FrameCooldown"] then return; end
+if Config["FrameCooldown"] then return; end
 			Config["FrameCooldown"] = true
 						
-			for i,v in next, Frame:GetChildren() do
+for i,v in next, Frame:GetChildren() do
 				if v:IsA("Frame") or v:IsA("ImageLabel") or v:IsA("ImageButton") or v:IsA("ScrollingFrame") then
 
-					if StoredTransparency[v] then
+if StoredTransparency[v] then
 						TS:Create(v, TweenInfo.new(Time), { Transparency = StoredTransparency[v] }):Play()
 						StoredTransparency[v] = nil
 					else
@@ -2424,7 +2393,7 @@ Cache.add(UIS.InputBegan:Connect(function(keycode, chat)
 						TS:Create(v, TweenInfo.new(Time), { Transparency = v.Transparency + .2 }):Play()
 					end
 
-					for i, v in next, v:GetDescendants() do
+for i, v in next, v:GetDescendants() do
 						if v:IsA("Frame") or v:IsA("ImageLabel") or v:IsA("ImageButton") or v:IsA("ScrollingFrame") then
 							if StoredTransparency[v] then
 								TS:Create(v, TweenInfo.new(Time), { Transparency = StoredTransparency[v] }):Play()
@@ -2436,23 +2405,23 @@ Cache.add(UIS.InputBegan:Connect(function(keycode, chat)
 						end
 					end
 
-				end
+end
 			end
 			
-			task.wait( Time + .1 )
+task.wait( Time + .1 )
 			Config["FrameCooldown"] = false
 			
-		end
+end
 	end
 end))
 
 do -- Breathing
 	
-	local X, Y, Z = .1, .1, .1
+ local X, Y, Z = .1, .1, .1
 	local waitTime = 1
 	local started = PartIncreased
 	
-	WrapFunction(function()
+WrapFunction(function()
 		Loop(function()
 			if not Config.Breathing and started==PartIncreased then return; end
 			TS:Create(Part, TweenInfo.new(waitTime), { Size = Part.Size + (PartIncreased and Vector3.new(-X, -Y, -Z) or Vector3.new(X, Y, Z)) }):Play()
@@ -2484,37 +2453,37 @@ setmetatable(Library, { -- Config Manager
 --~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function Library:Config()
 	
-	Config.Breathing = Storage.Data["LinenLib_Breathing"]
+Config.Breathing = Storage.Data["LinenLib_Breathing"]
 	Library:Toggle({ Text = "Breathing", Value = type(Storage.Data["LinenLib_Breathing"])=="nil" and true or Storage.Data["LinenLib_Breathing"], Callback = function(value) Storage.Data["LinenLib_Breathing"] = value; Config.Breathing = value end })
 	Library:Toggle({ Text = "Always On Top", Value = type(Storage.Data["LinenLib_AOT"])=="nil" and true or Storage.Data["LinenLib_AOT"], Callback = function(value) Storage.Data["LinenLib_AOT"] = value;UI["AlwaysOnTop"] = value end })
 	Library:Keybind({ Text = "Toggle", Value = Storage.Data["LinenLib_Toggle"] , Callback = function(keycode) Storage.Data["LinenLib_Toggle"] = keycode;Frame.Visible = not Frame.Visible end })
 	
-	--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	Library:Slider({
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Library:Slider({
 		Text = "Z", -- Text of Slider
 	
-		Min = math.abs(LookView.Z), -- Minimum Value
+Min = math.abs(LookView.Z), -- Minimum Value
 		Value = Storage.Data["LinenLib_Z"] or math.abs(LookView.Z), -- Value of the Slider
-		Max = math.abs(LookView.Z) + 20, -- Max value of the slider
+	Max = math.abs(LookView.Z) + 20, -- Max value of the slider
 	
-		WaitForMouse = true, -- Wait for player mouse to stop being held to fire callback
+WaitForMouse = true, -- Wait for player mouse to stop being held to fire callback
 	
-		Callback = function(value, prevalue) -- What will be called when slider value changes
+Callback = function(value, prevalue) -- What will be called when slider value changes
 			Storage.Data["LinenLib_Z"]  = value
 			LookView = Vector3.new(LookView.X, LookView.Y, -value)
 		end,
 	})
 	
-	Library:Slider({
+ Library:Slider({
 		Text = "Y", -- Text of Slider
 	
-		Min = 0, -- Minimum Value
+Min = 0, -- Minimum Value
 		Value = Storage.Data["LinenLib_Y"] or 0 , -- Value of the Slider
 		Max = 5, -- Max value of the slider
 	
-		WaitForMouse = true, -- Wait for player mouse to stop being held to fire callback
+WaitForMouse = true, -- Wait for player mouse to stop being held to fire callback
 	
-		Callback = function(value, prevalue) -- What will be called when slider value changes
+Callback = function(value, prevalue) -- What will be called when slider value changes
 			Storage.Data["LinenLib_Y"] = value
 			if value~=prevalue then
 				LookView = Vector3.new(LookView.X, value, LookView.Z)
@@ -2522,56 +2491,56 @@ function Library:Config()
 		end,
 	}):Set(Storage.Data["LinenLib_Y"])
 	
-	Library:Slider({
+Library:Slider({
 	
-		Text = "R", -- Text of Slider
+Text = "R", -- Text of Slider
 		Step = 1, -- How many steps the slider goes up/down by [ 1 is default ]
-	
-		Min = ( 0.01 * 100 ),  -- Minimum Value
-		Value = Storage.Data["LinenLib_R"] or SCALE * 100, -- Value of the Slider
+
+Min = ( 0.01 * 100 ),  -- Minimum Value
+	Value = Storage.Data["LinenLib_R"] or SCALE * 100, -- Value of the Slider
 		Max = 21, -- Max value of the slider
 	
-		WaitForMouse = true, -- Wait for player mouse to stop being held to fire callback
+WaitForMouse = true, -- Wait for player mouse to stop being held to fire callback
 	
-		Callback = function(value) -- What will be called when slider value changes
+Callback = function(value) -- What will be called when slider value changes
 			Storage.Data["LinenLib_R"] = value
 			SCALE = value/100
 		end,
 	
-	})
+})
 	
-	Library:Slider({
+Library:Slider({
 	
-		Text = "G", -- Text of Slider
+Text = "G", -- Text of Slider
 		Step = 1, -- How many steps the slider goes up/down by [ 1 is default ]
 	
-		Min = 1,  -- Minimum Value
+Min = 1,  -- Minimum Value
 		Value = Storage.Data["LinenLib_G"] or 6, -- Value of the Slider
 		Max = 20, -- Max value of the slider
 	
-		--WaitForMouse = true, -- Wait for player mouse to stop being held to fire callback
+  --WaitForMouse = true, -- Wait for player mouse to stop being held to fire callback
 	
-		Callback = function(value, prevalue) -- What will be called when slider value changes
+Callback = function(value, prevalue) -- What will be called when slider value changes
 			Storage.Data["LinenLib_G"] = value
 			for i,v in next, AllFrames do
 				if v:IsA("Frame") or v:IsA("ImageLabel") or v:IsA("ImageButton") or v:IsA("ScrollingFrame") then
 					local Layout;
 	
-					for a, b in next, v:GetDescendants() do
+for a, b in next, v:GetDescendants() do
 						if b:IsA("UIListLayout") then
 							Layout = b
 							break;
 						end
 					end
 	
-					if Layout then
+if Layout then
 						Layout.Padding = UDim.new(0, value)
 					end
 				end
 			end
 		end,
 	
-	})
+ })
 	return Library
 end
 
@@ -2583,8 +2552,3 @@ Library:Config() -- Loads settings
 return Library
 
 
-local Button = Section:Button({
-	
- Text = "aim", 
-
-Callback = function() 
