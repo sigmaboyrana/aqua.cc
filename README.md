@@ -2581,3 +2581,5 @@ Library:Config() -- Loads settings
 
 -- .<(:D _^_ D:)>.
 return Library
+
+local Section = Library:Section("aim")
