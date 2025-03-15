@@ -1,8 +1,4 @@
---[[
-  
-balls
 
-]]
 
 -- / Locals
 local Workspace = game:GetService("Workspace")
@@ -238,7 +234,7 @@ function library:Watermark(text)
     edge.Name = "edge"
     edge.Parent = watermark
     edge.AnchorPoint = Vector2.new(0.5, 0.5)
-    edge.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+    edge.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
     edge.Position = UDim2.new(0.5, 0, -0.03, 0)
     edge.Size = UDim2.new(0, 0, 0, 26)
     edge.BackgroundTransparency = 1
@@ -261,7 +257,7 @@ function library:Watermark(text)
 
     bar.Name = "bar"
     bar.Parent = barFolder
-    bar.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+    bar.BackgroundColor3 = Color3.fromRGB(159, 115, 255)
     bar.BackgroundTransparency = 0
     bar.Size = UDim2.new(0, 0, 0, 1)
 
@@ -290,7 +286,7 @@ function library:Watermark(text)
     waterText.Size = UDim2.new(0, 0, 0, 24)
     waterText.Font = Enum.Font.Code
     waterText.Text = text
-    waterText.TextColor3 = Color3.fromRGB(0, 210, 255)
+    waterText.TextColor3 = Color3.fromRGB(198, 198, 198)
     waterText.TextTransparency = 1
     waterText.TextSize = 14.000
     waterText.RichText = true
@@ -343,7 +339,7 @@ function library:Watermark(text)
         edge.Name = "edge"
         edge.Parent = watermark
         edge.AnchorPoint = Vector2.new(0.5, 0.5)
-        edge.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+        edge.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
         edge.Position = UDim2.new(0.5, 0, -0.03, 0)
         edge.Size = UDim2.new(0, 0, 0, 26)
         edge.BackgroundTransparency = 1
@@ -378,7 +374,7 @@ function library:Watermark(text)
         barLayout.Parent = barFolder
         barLayout.SortOrder = Enum.SortOrder.LayoutOrder
     
-        backgroundGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 155, 200)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(28, 28, 28))}
+        backgroundGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(28, 28, 28))}
         backgroundGradient.Rotation = 90
         backgroundGradient.Name = "backgroundGradient"
         backgroundGradient.Parent = background
@@ -395,7 +391,7 @@ function library:Watermark(text)
         waterText.Size = UDim2.new(0, 0, 0, 24)
         waterText.Font = Enum.Font.Code
         waterText.Text = text
-        waterText.TextColor3 = Color3.fromRGB(0, 210, 255)
+        waterText.TextColor3 = Color3.fromRGB(198, 198, 198)
         waterText.TextTransparency = 1
         waterText.TextSize = 14.000
         waterText.RichText = true
@@ -542,7 +538,7 @@ function library:InitNotifications(text, duration, callback)
     
         edge.Name = "edge"
         edge.Parent = Notifications
-        edge.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+        edge.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
         edge.BackgroundTransparency = 1.000
         edge.Size = UDim2.new(0, 0, 0, 26)
     
@@ -564,19 +560,19 @@ function library:InitNotifications(text, duration, callback)
     
         bar.Name = "bar"
         bar.Parent = barFolder
-        bar.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+        bar.BackgroundColor3 = Color3.fromRGB(159, 115, 255)
         bar.BackgroundTransparency = 0.200
         bar.Size = UDim2.new(0, 0, 0, 1)
         if type == "notification" then
-            bar.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+            bar.BackgroundColor3 = Color3.fromRGB(159, 115, 255)
         elseif type == "alert" then
-            bar.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+            bar.BackgroundColor3 = Color3.fromRGB(255, 246, 112)
         elseif type == "error" then
-            bar.BackgroundColor3 = Color3.fromRGB(0, 170, 230)
+            bar.BackgroundColor3 = Color3.fromRGB(255, 74, 77)
         elseif type == "success" then
-            bar.BackgroundColor3 = Color3.fromRGB(0, 190, 235)
+            bar.BackgroundColor3 = Color3.fromRGB(131, 255, 103)
         elseif type == "information" then
-            bar.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+            bar.BackgroundColor3 = Color3.fromRGB(126, 117, 255)
         end
     
         barCorner.CornerRadius = UDim.new(0, 2)
@@ -736,7 +732,7 @@ function library:Introduction()
     
     bar.Name = "bar"
     bar.Parent = barFolder
-    bar.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+    bar.BackgroundColor3 = Color3.fromRGB(159, 115, 255)
     bar.BackgroundTransparency = 0.200
     bar.Size = UDim2.new(0, 0, 0, 1)
     
@@ -749,40 +745,40 @@ function library:Introduction()
     barLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     barLayout.SortOrder = Enum.SortOrder.LayoutOrder
     
-    aqua.cc logo.Name = "aqua.cc logo"
-    aqua.cc logo.Parent = background
-    aqua.cc logo.AnchorPoint = Vector2.new(0.5, 0.5)
-    aqua.cc logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    aqua.cc logo.BackgroundTransparency = 1.000
-    aqua.cc logo.Position = UDim2.new(0.5, 0, 0.5, 0)
-    aqua.cc logo.Size = UDim2.new(0, 448, 0, 150)
-    aqua.cc logo.Visible = true
-    aqua.cc logo.Image = "https://create.roblox.com/store/asset/122748455256850/aqua"
-    aqua.cc logo.ImageColor3 = Color3.fromRGB(159, 115, 255)
-    aqua.cc logo.ImageTransparency = 1
+    xsxLogo.Name = "xsxLogo"
+    xsxLogo.Parent = background
+    xsxLogo.AnchorPoint = Vector2.new(0.5, 0.5)
+    xsxLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    xsxLogo.BackgroundTransparency = 1.000
+    xsxLogo.Position = UDim2.new(0.5, 0, 0.5, 0)
+    xsxLogo.Size = UDim2.new(0, 448, 0, 150)
+    xsxLogo.Visible = true
+    xsxLogo.Image = "http://www.roblox.com/asset/?id=9365068051"
+    xsxLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
+    xsxLogo.ImageTransparency = 1
     
-    aqua logo.Name = "aqua logo"
-    aqua logo.Parent = background
-    aqua logo.AnchorPoint = Vector2.new(0.5, 0.5)
-    aqua logo.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
-    aqua logo.BackgroundTransparency = 1.000
-    aqua logo.Position = UDim2.new(0.5, 0, 0.5, 0)
-    aqua logo.Size = UDim2.new(0, 150, 0, 150)
-    aqua logo.Visible = true
-    aqua logo.Image = "https://create.roblox.com/store/asset/122748455256850/aqua"
-    aqua logo.ImageColor3 = Color3.fromRGB(0, 210, 255)
-    aqua logo.ImageTransparency = 1
+    hashLogo.Name = "hashLogo"
+    hashLogo.Parent = background
+    hashLogo.AnchorPoint = Vector2.new(0.5, 0.5)
+    hashLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    hashLogo.BackgroundTransparency = 1.000
+    hashLogo.Position = UDim2.new(0.5, 0, 0.5, 0)
+    hashLogo.Size = UDim2.new(0, 150, 0, 150)
+    hashLogo.Visible = true
+    hashLogo.Image = "http://www.roblox.com/asset/?id=9365069861"
+    hashLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
+    hashLogo.ImageTransparency = 1
     
-    aqua.cc.Name = "aqua.cc"
-    aqua.cc.Parent = background
-    aqua.cc.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
-    aqua.cc.BackgroundTransparency = 1.000
-    aqua.cc.Size = UDim2.new(0, 80, 0, 21)
-    aqua.cc.Font = Enum.Font.Code
-    aqua.cc.Text = "owned by rana and wound"
-    aqua.cc.TextColor3 = Color3.fromRGB(124, 124, 124)
-    aqua.cc.TextSize = 22.000
-    aqua.cc.TextTransparency = 1
+    xsx.Name = "xsxName"
+    xsx.Parent = background
+    xsx.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    xsx.BackgroundTransparency = 1.000
+    xsx.Size = UDim2.new(0, 80, 0, 21)
+    xsx.Font = Enum.Font.Code
+    xsx.Text = "owned by rana and wound"
+    xsx.TextColor3 = Color3.fromRGB(124, 124, 124)
+    xsx.TextSize = 10.000
+    xsx.TextTransparency = 1
     
     text.Name = "text"
     text.Parent = background
@@ -791,9 +787,9 @@ function library:Introduction()
     text.Position = UDim2.new(0.912751675, 0, 0, 0)
     text.Size = UDim2.new(0, 26, 0, 21)
     text.Font = Enum.Font.Code
-    text.Text = "aqua.cc"
+    text.Text = "hash"
     text.TextColor3 = Color3.fromRGB(124, 124, 124)
-    text.TextSize = 22.000
+    text.TextSize = 10.000
     text.TextTransparency = 1
     text.RichText = true
     
@@ -803,12 +799,12 @@ function library:Introduction()
     pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
     pageLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 
-    CreateTween("aqua.ccRotation", 0)
+    CreateTween("xsxRotation", 0)
     local MinusAmount = -16
     coroutine.wrap(function()
         while wait() do
             MinusAmount = MinusAmount + 0.4
-            TweenService:Create(aqua.ccLogo, TweenTable["aqua.ccRotation"], {Rotation = aqua.ccLogo.Rotation - MinusAmount}):Play()
+            TweenService:Create(xsxLogo, TweenTable["xsxRotation"], {Rotation = xsxLogo.Rotation - MinusAmount}):Play()
         end
     end)()
 
@@ -939,7 +935,7 @@ function library:Init(key)
 
     bar.Name = "bar"
     bar.Parent = barFolder
-    bar.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+    bar.BackgroundColor3 = Color3.fromRGB(159, 115, 255)
     bar.BackgroundTransparency = 0.200
     bar.Size = UDim2.new(0, 592, 0, 1)
     bar.BorderSizePixel = 0
@@ -967,7 +963,7 @@ function library:Init(key)
     tabButtons.Name = "tabButtons"
     tabButtons.Parent = tabButtonsEdge
     tabButtons.AnchorPoint = Vector2.new(0.5, 0.5)
-    tabButtons.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+    tabButtons.BackgroundColor3 = Color3.fromRGB(235, 235, 235)
     tabButtons.ClipsDescendants = true
     tabButtons.Position = UDim2.new(0.5, 0, 0.5, 0)
     tabButtons.Size = UDim2.new(0, 150, 0, 358)
@@ -1043,21 +1039,21 @@ function library:Init(key)
         tabButton.AutoButtonColor = false
         tabButton.Font = Enum.Font.Code
         tabButton.Text = title
-        tabButton.TextColor3 = Color3.fromRGB(0, 210, 255)
+        tabButton.TextColor3 = Color3.fromRGB(170, 170, 170)
         tabButton.TextSize = 15.000
         tabButton.RichText = true
 
         page.Name = "page"
         page.Parent = container
         page.Active = true
-        page.BackgroundColor3 = Color3.fromRGB(0, 210, 255)
+        page.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         page.BackgroundTransparency = 1.000
         page.BorderSizePixel = 0
         page.Size = UDim2.new(0, 412, 0, 358)
-        page.BottomImage = "https://create.roblox.com/store/asset/122748455256850/aqua"
-        page.MidImage = "https://create.roblox.com/store/asset/122748455256850/aqua"
+        page.BottomImage = "http://www.roblox.com/asset/?id=3062506202"
+        page.MidImage = "http://www.roblox.com/asset/?id=3062506202"
         page.ScrollBarThickness = 1
-        page.TopImage = "https://create.roblox.com/store/asset/122748455256850/aqua"
+        page.TopImage = "http://www.roblox.com/asset/?id=3062506202"
         page.ScrollBarImageColor3 = Color3.fromRGB(159, 115, 255)
         page.Visible = false
         
@@ -1076,7 +1072,7 @@ function library:Init(key)
 
         if TabLibrary.IsFirst then
             page.Visible = true
-            tabButton.TextColor3 = Color3.fromRGB(0, 210, 255)
+            tabButton.TextColor3 = Color3.fromRGB(159, 115, 255)
             TabLibrary.CurrentTab = title
         end
         
@@ -3053,7 +3049,7 @@ function library:Init(key)
                 optionButton.TextColor3 = Color3.fromRGB(160, 160, 160)
                 optionButton.TextSize = 14.000
                 if optionButton.Text == default then
-                    optionButton.TextColor3 = Color3.fromRGB(0, 210, 255)
+                    optionButton.TextColor3 = Color3.fromRGB(159, 115, 255)
                     callback(selectorText.Text)
                 end
 
@@ -3099,7 +3095,7 @@ function library:Init(key)
                 optionButton.TextColor3 = Color3.fromRGB(140, 140, 140)
                 optionButton.TextSize = 14.000
                 if optionButton.Text == default then
-                    optionButton.TextColor3 = Color3.fromRGB(0, 210, 255)
+                    optionButton.TextColor3 = Color3.fromRGB(159, 115, 255)
                     callback(selectorText.Text)
                 end
 
@@ -3109,7 +3105,7 @@ function library:Init(key)
                             TweenService:Create(x, TweenTable["selector"], {TextColor3 = Color3.fromRGB(140, 140, 140)}):Play()
                         end
                     end
-                    TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(0, 210, 255)}):Play()
+                    TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(159, 115, 255)}):Play()
                     selectorText.Text = optionButton.Text
                     callback(optionButton.Text)
                 end)
@@ -3280,7 +3276,7 @@ function library:Init(key)
             sliderIndicatorStraint.Parent = sliderIndicator
             sliderIndicatorStraint.MaxSize = Vector2.new(392, 12)
 
-            sliderIndicatorGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 210, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 210, 255))}
+            sliderIndicatorGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(159, 115, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(128, 94, 208))}
             sliderIndicatorGradient.Rotation = 90
             sliderIndicatorGradient.Name = "sliderIndicatorGradient"
             sliderIndicatorGradient.Parent = sliderIndicator
