@@ -2581,3 +2581,9 @@ Library:Config() -- Loads settings
 
 -- .<(:D _^_ D:)>.
 return Library
+
+end
+
+local Section = Library:Section("Aiming")
+
+local Button = Library:Section("lock")
